@@ -8,6 +8,8 @@ else
 	if [ $? -ne 0 ]; then
 		echo "Tests failed. Fix issues first"
 		exit 1
+	else
+		echo
 	fi
 fi
 
