@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"github.com/IamNanjo/authserver/backend"
+	"github.com/IamNanjo/authserver/db"
 	"os"
 )
 
@@ -14,6 +15,8 @@ func main() {
 	if addr == "" {
 		addr = ":8080"
 	}
+
+	db.Initialize()
 
 	os.Stdout.WriteString("Listening on " + addr + "\n")
 	backend.StartServer(addr, staticFiles)
