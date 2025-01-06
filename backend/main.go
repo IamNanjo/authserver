@@ -9,7 +9,6 @@ import (
 func StartServer(addr string, staticFiles fs.FS) {
 	http.Handle("/static/", http.FileServer(http.FS(staticFiles)))
 
-	http.HandleFunc("/admin", routes.Admin)
 	http.HandleFunc("/", routes.Index)
 
 	http.ListenAndServe(addr, nil)
