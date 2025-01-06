@@ -1,0 +1,15 @@
+package pages
+
+type PageDataIndex struct {
+App string
+RedirectTo templ.SafeURL
+}
+
+templ Index(data PageDataIndex) {
+@Layout([]byte("Index page"), nil) {
+<div>
+	Authenticate to app { data.App }
+	<a href={ data.RedirectTo }>Redirect after login</a>
+</div>
+}
+}
