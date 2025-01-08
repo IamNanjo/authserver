@@ -40,7 +40,7 @@ func Connection() *sqlx.DB {
 func GetApp(id string) (App, error) {
 	app := App{}
 
-	err := Connection().Get(&app, "SELECT * FROM App WHERE id=:id LIMIT 1", struct{ id string }{id})
+	err := Connection().Get(&app, "SELECT * FROM App WHERE id=$1 LIMIT 1", id)
 
 	return app, err
 }
