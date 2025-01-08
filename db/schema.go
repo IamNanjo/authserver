@@ -44,7 +44,7 @@ var Schema = `
 CREATE TABLE IF NOT EXISTS App (
 	id TEXT PRIMARY KEY NOT NULL,
 	name TEXT NOT NULL,
-	description TEXT,
+	description TEXT DEFAULT '',
 	visibility INTEGER NOT NULL DEFAULT 0,
 	domain TEXT NOT NULL UNIQUE
 );
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS User (
 	id TEXT PRIMARY KEY NOT NULL,
 	name TEXT NOT NULL,
 	password TEXT NOT NULL,
-	email TEXT,
+	email TEXT DEFAULT '',
 	role INTEGER NOT NULL DEFAULT 0
 );
 
