@@ -26,7 +26,7 @@ func getPath() {
 		panic(err)
 	}
 
-	dbPath = filepath.Dir(path) + "authserver.db"
+	dbPath = filepath.Dir(path) + string(os.PathSeparator) + "authserver.db"
 }
 
 func Connection() *sqlx.DB {
