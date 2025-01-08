@@ -36,3 +36,19 @@ func Connection() *sqlx.DB {
 
 	return sqlx.MustConnect("sqlite", dbPath)
 }
+
+func GetApp(id string) (App, error) {
+	app := App{}
+
+	err := Connection().Get(&app, "SELECT * FROM App WHERE id=:id LIMIT 1", struct{ id string }{id})
+
+	return app, err
+}
+
+func GetApps() ([]App, error) {
+	apps := []App{}
+
+	err := Connection().Select(&apps, "SELECT * FROM App WHERE visibility = 1")
+
+	return apps, err
+}
