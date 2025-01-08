@@ -10,6 +10,9 @@ It is not currently recommended to use this project anywhere.
 A simple authentication server written in Go.
 Supports password authentication using argon2 hashes as well as passkey authentication.
 
+The authentication page ensures that the redirect path is on the same domain as one of the domains that is configured for the selected app.
+This prevents redirecting to malicious sites after authentication, even if the authentication cookie is not valid for the selected app.
+
 ## Database
 
 When a new user signs up, they will be able to use any apps that use this authentication server and they will be able to connect their own apps to it.
