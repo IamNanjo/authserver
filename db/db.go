@@ -37,14 +37,18 @@ func Connection() *sqlx.DB {
 	return sqlx.MustConnect("sqlite", dbPath)
 }
 
+// Populates App.Domains
 func GetApp(id string) (App, error) {
 	app := App{}
 
-	err := Connection().Get(&app, "SELECT * FROM App WHERE id=$1 LIMIT 1", id)
+	conn := Connection()
+	err := conn.Get(&app, "SELECT * FROM App WHERE id=$1 LIMIT 1", id)
+	err = conn.Select(&app.Domains, "SELECT * FROM Domain WHERE app=$1", id)
 
 	return app, err
 }
 
+// Does not populate App.Domains
 func GetApps() ([]App, error) {
 	apps := []App{}
 

@@ -18,12 +18,17 @@ var AppVisibility = struct {
 	Visible: 1,
 }
 
+type Domain struct {
+	Name string `db:"name"`
+	App  string `db:"app"`
+}
+
 type App struct {
 	Id          string `db:"id"`
 	Name        string `db:"name"`
 	Description string `db:"description"`
 	Visibility  int    `db:"visibility"`
-	Domain      string `db:"domain"`
+	Domains     []Domain
 }
 
 type User struct {
@@ -54,7 +59,6 @@ type AppWithUsers struct {
 	Name        string `db:"name"`
 	Description string `db:"description"`
 	Visibility  int    `db:"visibility"`
-	Domain      string `db:"domain"`
 	Users       []UserWithAppRole
 }
 
