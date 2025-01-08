@@ -10,6 +10,14 @@ var Role = struct {
 	Administrator: 3,
 }
 
+var AppVisibility = struct {
+	Hidden  int
+	Visible int
+}{
+	Hidden:  0,
+	Visible: 1,
+}
+
 type App struct {
 	Id          string `db:"id"`
 	Name        string `db:"name"`
@@ -32,13 +40,14 @@ type AppUser struct {
 
 var Schema = `
 CREATE TABLE IF NOT EXISTS App (
-	id TEXT PRIMARY KEY,
+	id TEXT PRIMARY KEY NOT NULL,
 	name TEXT NOT NULL,
-	description TEXT
+	description TEXT,
+	visibility INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS User (
-	id TEXT PRIMARY KEY,
+	id TEXT PRIMARY KEY NOT NULL,
 	name TEXT NOT NULL,
 	password TEXT NOT NULL,
 	email TEXT,
@@ -46,8 +55,8 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS AppUser (
-	app TEXT,
-	user TEXT,
+	app TEXT NOT NULL,
+	user TEXT NOT NULL,
 	role TEXT NOT NULL,
 	PRIMARY KEY (app, user),
 	FOREIGN KEY (app) REFERENCES App(id) ON UPDATE CASCADE ON DELETE CASCADE,
