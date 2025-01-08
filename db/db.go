@@ -52,3 +52,24 @@ func GetApps() ([]App, error) {
 
 	return apps, err
 }
+
+func GetAppUsers(id string) ([]UserWithAppRole, error) {
+	users := []UserWithAppRole{}
+
+	err := Connection().Select(
+		&users,
+		`SELECT
+			id,
+			name,
+			password,
+			email,
+			u.role as role,
+			au.role as app_role
+		FROM User u
+		INNER JOIN AppUser au
+			ON u.id = au.user
+		WHERE app=$1`, id,
+	)
+
+	return users, err
+}
