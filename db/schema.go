@@ -22,6 +22,7 @@ type App struct {
 	Id          string `db:"id"`
 	Name        string `db:"name"`
 	Description string `db:"description"`
+	Visibility  int    `db:"visibility"`
 	Domain      string `db:"domain"`
 }
 
