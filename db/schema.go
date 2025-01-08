@@ -22,6 +22,7 @@ type App struct {
 	Id          string `db:"id"`
 	Name        string `db:"name"`
 	Description string `db:"description"`
+	Domain      string `db:"domain"`
 }
 
 type User struct {
@@ -43,7 +44,8 @@ CREATE TABLE IF NOT EXISTS App (
 	id TEXT PRIMARY KEY NOT NULL,
 	name TEXT NOT NULL,
 	description TEXT,
-	visibility INTEGER NOT NULL DEFAULT 0
+	visibility INTEGER NOT NULL DEFAULT 0,
+	domain TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS User (
