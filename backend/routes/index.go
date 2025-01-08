@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/pages"
 	"github.com/a-h/templ"
 	"net/http"
@@ -10,8 +11,8 @@ import (
 func getIndex(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 
-	app := query.Get("app")
-	if app == "" {
+	appId := query.Get("app")
+	if appId == "" {
 		Error(w, http.StatusBadRequest, "Invalid authentication URL. No app ID specified")
 		return
 	}
@@ -22,8 +23,14 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	app, err := db.GetApp(appId)
+	if err != nil {
+		Error(w, http.StatusBadRequest, "Invalid authentication URL. App not found")
+		return
+	}
+
 	page := pages.Index(pages.PageDataIndex{App: app, RedirectTo: templ.SafeURL(redirectTo)})
-	err := page.Render(context.Background(), w)
+	err = page.Render(context.Background(), w)
 	if err != nil {
 		Error(w, http.StatusInternalServerError, "Could not render the page")
 		return
