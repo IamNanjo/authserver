@@ -2,10 +2,13 @@ package routes
 
 import (
 	"context"
+	"net/http"
+	"net/url"
+	"strings"
+
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/pages"
 	"github.com/a-h/templ"
-	"net/http"
 )
 
 func getIndex(w http.ResponseWriter, r *http.Request) {
@@ -23,9 +26,29 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	redirectURL, err := url.Parse(redirectTo)
+	if err != nil {
+		Error(w, http.StatusBadRequest, "Invalid redirect URL")
+		return
+	}
+
 	app, err := db.GetApp(appId)
 	if err != nil {
 		Error(w, http.StatusBadRequest, "Invalid authentication URL. App not found")
+		return
+	}
+
+	redirectURLIsAllowed := false
+
+	for _, domain := range app.Domains {
+		hostname := redirectURL.Hostname()
+		if domain.Name == hostname || (domain.Name[0] == '.' && strings.HasSuffix(domain.Name, redirectURL.Hostname())) {
+			redirectURLIsAllowed = true
+		}
+	}
+
+	if !redirectURLIsAllowed {
+		Error(w, http.StatusBadRequest, "Invalid authentication URL. Redirect page is not on the app domains")
 		return
 	}
 
