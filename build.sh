@@ -1,7 +1,7 @@
 #!/bin/env bash
 
-go mod tidy
 templ generate
+go mod tidy
 
 if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 	echo "Skipping tests"
