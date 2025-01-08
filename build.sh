@@ -1,5 +1,8 @@
 #!/bin/env bash
 
+go mod tidy
+templ generate
+
 if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 	echo "Skipping tests"
 else 
@@ -12,8 +15,6 @@ else
 		echo
 	fi
 fi
-
-templ generate
 
 platforms=("linux/amd64" "linux/arm64" "windows/amd64" "windows/arm64" "darwin/amd64" "darwin/arm64")
 
