@@ -40,6 +40,24 @@ type AppUser struct {
 	Role int    `db:"role"`
 }
 
+type UserWithAppRole struct {
+	Id       string `db:"id"`
+	Name     string `db:"name"`
+	Password string `db:"password"`
+	Email    string `db:"email"`
+	Role     int    `db:"role"`
+	AppRole  int    `db:"app_role"`
+}
+
+type AppWithUsers struct {
+	Id          string `db:"id"`
+	Name        string `db:"name"`
+	Description string `db:"description"`
+	Visibility  int    `db:"visibility"`
+	Domain      string `db:"domain"`
+	Users       []UserWithAppRole
+}
+
 var Schema = `
 CREATE TABLE IF NOT EXISTS App (
 	id TEXT PRIMARY KEY NOT NULL,
