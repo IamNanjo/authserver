@@ -43,7 +43,13 @@ func GetApp(id string) (App, error) {
 
 	conn := Connection()
 	err := conn.Get(&app, "SELECT * FROM App WHERE id=$1 LIMIT 1", id)
+	if err != nil {
+		return app, err
+	}
 	err = conn.Select(&app.Domains, "SELECT * FROM Domain WHERE app=$1", id)
+	if err != nil {
+		return app, err
+	}
 
 	return app, err
 }
