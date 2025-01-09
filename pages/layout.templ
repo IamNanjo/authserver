@@ -11,9 +11,9 @@ templ Layout(pageTitle []byte, bodyAttributes templ.Attributes) {
 			<meta name="author" content="IamNanjo"/>
 			<meta name="keywords" content="auth,authentication"/>
 			<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
-			<link rel="stylesheet" href="/static/style.css"/>
+			<link rel="stylesheet" href="/static/css/style.css"/>
 			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
-			<script defer src="/static/index.js"></script>
+			<script defer src="/static/js/index.js"></script>
 			<title>
 				if pageTitle != nil {
 					{ string(pageTitle) }
