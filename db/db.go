@@ -11,8 +11,8 @@ var dbPath = ""
 
 // Create tables according to Schema (schema.go)
 func Initialize() {
-	db := Connection()
-	db.MustExec(Schema)
+	Connection().MustExec(Schema)
+	os.Stdout.WriteString("Database initialized according to schema\n")
 }
 
 func getPath() {
