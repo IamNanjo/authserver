@@ -1,34 +1,29 @@
 package pages
 
 templ Layout(pageTitle []byte, bodyAttributes templ.Attributes) {
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<meta name="description" content="Flexible cross site authentication platform" />
-	<meta name="author" content="IamNanjo" />
-	<meta name="keywords" content="auth,authentication" />
-	<link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-	<link rel="stylesheet" href="/static/style.css" />
-	<script src="https://unpkg.com/htmx.org@2.0.4"
-		integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
-		crossorigin="anonymous"></script>
-	<script defer src="/static/index.js"></script>
-	<title>
-		if pageTitle != nil {
-		{ string(pageTitle) }
-		} else {
-		Authentication
-		}
-	</title>
-</head>
-
-<body { bodyAttributes... }>
-	{ children... }
-</body>
-
-</html>
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0 interactive-widget=resizes-content"/>
+			<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+			<meta name="description" content="Flexible cross site authentication platform"/>
+			<meta name="author" content="IamNanjo"/>
+			<meta name="keywords" content="auth,authentication"/>
+			<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+			<link rel="stylesheet" href="/static/style.css"/>
+			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+			<script defer src="/static/index.js"></script>
+			<title>
+				if pageTitle != nil {
+					{ string(pageTitle) }
+				} else {
+					Authentication
+				}
+			</title>
+		</head>
+		<body { bodyAttributes... }>
+			{ children... }
+		</body>
+	</html>
 }
