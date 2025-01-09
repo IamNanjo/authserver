@@ -1,6 +1,6 @@
 package pages
 
-templ Layout(pageTitle []byte, bodyAttributes templ.Attributes) {
+templ Layout(pageTitle []byte, bodyAttributes templ.Attributes, pageStyle []byte) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -12,6 +12,9 @@ templ Layout(pageTitle []byte, bodyAttributes templ.Attributes) {
 			<meta name="keywords" content="auth,authentication"/>
 			<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
 			<link rel="stylesheet" href="/static/css/style.css"/>
+			if pageStyle != nil {
+				<link rel="stylesheet" href={ "/static/css/"+string(pageStyle) }/>
+			}
 			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 			<script defer src="/static/js/index.js"></script>
 			<title>

@@ -3,15 +3,15 @@ package pages
 import "github.com/IamNanjo/authserver/db"
 
 type PageDataIndex struct {
-App db.App
-RedirectTo templ.SafeURL
+	App        db.App
+	RedirectTo templ.SafeURL
 }
 
 templ Index(data PageDataIndex) {
-@Layout([]byte("Index page"), nil) {
-<div>
-	Authenticate to app { data.App.Name }
-	<a href={ data.RedirectTo }>Redirect after login</a>
-</div>
-}
+	@Layout([]byte("Index page"), nil, []byte("index.css")) {
+		<div>
+			Authenticate to app { data.App.Name }
+			<a href={ data.RedirectTo }>Redirect after login</a>
+		</div>
+	}
 }

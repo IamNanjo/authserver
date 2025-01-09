@@ -1,7 +1,7 @@
 package pages
 
 templ Error(err string, redirect templ.SafeURL) {
-	@Layout([]byte("Error | Authentication"), nil) {
+	@Layout([]byte("Error | Authentication"), nil, []byte("error.css")) {
 		<main>
 			if redirect != "" {
 				<a href={ redirect }>&larr; Back</a>
