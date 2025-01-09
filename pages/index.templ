@@ -1,17 +1,7 @@
 package pages
 
-import "github.com/IamNanjo/authserver/db"
-
-type PageDataIndex struct {
-	App        db.App
-	RedirectTo templ.SafeURL
-}
-
-templ Index(data PageDataIndex) {
-	@Layout([]byte("Index page"), nil, []byte("index.css")) {
-		<div>
-			Authenticate to app { data.App.Name }
-			<a href={ data.RedirectTo }>Redirect after login</a>
-		</div>
+templ Index() {
+	@Layout([]byte("Authentication service"), nil, []byte("index.css")) {
+		<main class="center">Authentication service</main>
 	}
 }
