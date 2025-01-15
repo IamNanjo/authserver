@@ -1,18 +1,14 @@
 package pages
 
+import "github.com/IamNanjo/authserver/components"
+
 templ Error(err string, redirect templ.SafeURL) {
 	@Layout([]byte("Error | Authentication"), nil, []byte("error.css")) {
 		<main>
 			if redirect != "" {
 				<a href={ redirect }>&larr; Back</a>
 			}
-			<div class="error center">
-				if err == "" {
-					Unknown error
-				} else {
-					{ err }
-				}
-			</div>
+			@components.Error(err, []string{"center"})
 		</main>
 	}
 }

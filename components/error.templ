@@ -1,0 +1,11 @@
+package components
+
+templ Error(err string, classes []string) {
+	<div class={ "error" , classes }>
+		if err == "" {
+			Unknown error
+		} else {
+			{ err }
+		}
+	</div>
+}

@@ -24,7 +24,8 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: min(95%, 35em);
+    width: 35em;
+    max-width: 95%;
     min-height: calc(100% - 3em);
     padding-block: 2em;
     margin-inline: auto;

@@ -1,0 +1,64 @@
+.title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2em;
+}
+
+.password-auth__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.password-auth__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 20em;
+    max-width: 100%;
+}
+
+.password-auth__form-label {
+    color: #7f7f7f;
+}
+
+.password-auth__form-field {
+    width: 100%;
+    background-color: #121212;
+    color: white;
+    padding: 0.25em 0.5em;
+    font-size: 1.25rem;
+    outline: 2px solid #7f7f7f;
+    border: none;
+    border-radius: 6px;
+}
+
+.password-auth__form-submit {
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 0.75em 1.5em;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.error {
+    background-color: #121212;
+    color: #ff6961;
+    padding: 1em 0.5em;
+    border-radius: 4px;
+    font-size: 1.125rem;
+    text-align: center;
+    text-shadow: 1px 1px 1px solid;
+}
+.error.hidden {
+    display: none;
+}
+
+input:user-invalid {
+    outline-color: #ff6961;
+}
+
+input:user-valid {
+    outline-color: #a6e3a1;
+}

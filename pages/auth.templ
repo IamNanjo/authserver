@@ -1,0 +1,37 @@
+package pages
+
+import "github.com/IamNanjo/authserver/db"
+
+templ Auth(app db.App) {
+	@Layout([]byte(app.Name+" | Authenticate"), nil, []byte("auth.css")) {
+		<main>
+			<h1 class="title">Authenticate to { app.Name }</h1>
+			<form class="password-auth__form" hx-post="/api/auth/password" hx-swap="outerHTML" hx-target="#error">
+				<div class="password-auth__form-group">
+					<label class="password-auth__form-label" for="email-username">Email or username</label>
+					<input
+						required
+						id="email-username"
+						class="password-auth__form-field"
+						type="text"
+						name="email-or-username"
+						autocomplete="username"
+					/>
+				</div>
+				<div class="password-auth__form-group">
+					<label class="password-auth__form-label" for="password">Password</label>
+					<input
+						required
+						id="password"
+						class="password-auth__form-field"
+						type="password"
+						name="password"
+						autocomplete="current-password"
+					/>
+				</div>
+				<button class="password-auth__form-submit" type="submit">Log in</button>
+				<div id="error" class="error hidden"></div>
+			</form>
+		</main>
+	}
+}
