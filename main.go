@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"flag"
 	"github.com/IamNanjo/authserver/backend"
 	"github.com/IamNanjo/authserver/db"
 	"os"
@@ -15,6 +16,11 @@ func main() {
 	if addr == "" {
 		addr = ":8080"
 	}
+
+	// Override environment variable with cli flag
+	flag.StringVar(&addr, "addr", addr, "Listen address")
+
+	flag.Parse()
 
 	db.Initialize()
 
