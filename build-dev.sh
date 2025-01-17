@@ -3,4 +3,4 @@
 templ generate &&
 go mod tidy &&
 go build -o dist/
-dist/authserver -h
+dist/authserver
