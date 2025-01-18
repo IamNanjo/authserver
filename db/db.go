@@ -9,13 +9,21 @@ import (
 
 var dbPath = ""
 
-// Create tables according to Schema (schema.go)
-func Initialize() {
+// Create tables according to Schema (schema.go).
+// Path can be nil to use default path.
+func Initialize(path *string) {
+	if path == nil {
+		getDefaultPath()
+	} else {
+		dbPath = *path
+	}
 	Connection().MustExec(Schema)
 	os.Stdout.WriteString("Database initialized according to schema\n")
 }
 
-func getPath() {
+// Default path is <path of executable>/authserver.db.
+// Evaluates symlinks.
+func getDefaultPath() {
 	exe, err := os.Executable()
 	if err != nil {
 		panic(err)
@@ -29,10 +37,7 @@ func getPath() {
 	dbPath = filepath.Dir(path) + string(os.PathSeparator) + "authserver.db"
 }
 
+// Returns connection and panics on error
 func Connection() *sqlx.DB {
-	if dbPath == "" {
-		getPath()
-	}
-
 	return sqlx.MustConnect("sqlite", dbPath)
 }

@@ -22,7 +22,7 @@ func main() {
 
 	flag.Parse()
 
-	db.Initialize()
+	db.Initialize(nil)
 
 	os.Stdout.WriteString("Listening on " + addr + "\n")
 	backend.StartServer(addr, staticFiles)
