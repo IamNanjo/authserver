@@ -41,7 +41,7 @@ do
 
 	printf "Building $output_name - "
 
-	env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name
+	env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name -ldflags "-s -w"
 
 	if [ $? -ne 0 ]; then
    		echo "failed"
