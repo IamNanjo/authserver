@@ -5,20 +5,52 @@ import (
 	_ "modernc.org/sqlite"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
-var dbPath = ""
+var dbPath string = ""
 
-// Create tables according to Schema (schema.go).
+// Create tables according to migrations.
+// Migrations are run in ascending order based on filename.
 // Path can be nil to use default path.
-func Initialize(path *string) {
+func Initialize(path *string) error {
 	if path == nil {
 		getDefaultPath()
 	} else {
 		dbPath = *path
 	}
-	Connection().MustExec(Schema)
-	os.Stdout.WriteString("Database initialized according to schema\n")
+
+	connection := Connection()
+
+	latestMigration := Migration{Id: 0}
+
+	connection.Get(&latestMigration, "SELECT * FROM Migration ORDER BY id DESC LIMIT 1")
+
+	migrations, err := GetMigrations(latestMigration.Id)
+
+	if err != nil {
+		os.Stderr.WriteString("Could not get migrations. Error: " + err.Error() + "\n")
+		os.Exit(1)
+	}
+
+	for _, migration := range migrations {
+		_, err := connection.Exec(string(migration.content))
+
+		if err != nil {
+			os.Stderr.WriteString("Migration failed: " + migration.filename + "\n" + err.Error() + "\n")
+			os.Exit(1)
+		}
+	}
+
+	migrationsFinished := len(migrations)
+	os.Stdout.WriteString("Finished " + strconv.Itoa(migrationsFinished) + " database migration")
+	if migrationsFinished == 1 {
+		os.Stdout.WriteString("\n")
+	} else {
+		os.Stdout.WriteString("s\n")
+	}
+
+	return nil
 }
 
 // Default path is <path of executable>/authserver.db.

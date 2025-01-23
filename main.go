@@ -22,8 +22,13 @@ func main() {
 
 	flag.Parse()
 
-	db.Initialize(nil)
+	err := db.Initialize(nil)
 
-	os.Stdout.WriteString("Listening on " + addr + "\n")
+	if err != nil {
+		os.Stderr.WriteString("Could not initialize database. Error: " + err.Error() + "\n")
+		os.Exit(1)
+	}
+
+	os.Stdout.WriteString("Starting server on " + addr + "\n")
 	backend.StartServer(addr, staticFiles)
 }
