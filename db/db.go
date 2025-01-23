@@ -34,8 +34,13 @@ func Initialize(path *string) error {
 	}
 
 	for _, migration := range migrations {
-		_, err := connection.Exec(string(migration.content))
+		tx, err := connection.Begin()
+		if err != nil {
+			return err
+		}
+		_, err = tx.Exec(string(migration.content))
 
+		err = tx.Commit()
 		if err != nil {
 			os.Stderr.WriteString("Migration failed: " + migration.filename + "\n" + err.Error() + "\n")
 			os.Exit(1)
