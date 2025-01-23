@@ -1,7 +1,12 @@
 package pages
 
 templ Index() {
-	@Layout([]byte("Authentication service"), nil, []byte("index.css")) {
-		<main class="center">Authentication service</main>
-	}
+{{
+var pageTitle = "Authentication service"
+var pageStyle = "index.css"
+var pageScript = ""
+}}
+@Layout(pageTitle, pageStyle, pageScript) {
+<main class="center">Authentication service</main>
+}
 }

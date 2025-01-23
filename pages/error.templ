@@ -3,12 +3,17 @@ package pages
 import "github.com/IamNanjo/authserver/components"
 
 templ Error(err string, redirect templ.SafeURL) {
-	@Layout([]byte("Error | Authentication"), nil, []byte("error.css")) {
-		<main>
-			if redirect != "" {
-				<a href={ redirect }>&larr; Back</a>
-			}
-			@components.Error(err, []string{"center"})
-		</main>
+{{
+var pageTitle = "Error"
+var pageStyle = "error.css"
+var pageScript string = ""
+}}
+@Layout(pageTitle, pageStyle, pageScript) {
+<main>
+	if redirect != "" {
+	<a href={ redirect }>&larr; Back</a>
 	}
+	@components.Error(err, []string{"center"})
+</main>
+}
 }
