@@ -55,6 +55,7 @@ func GenerateSalt(saltLength int) ([]byte, error) {
 	return salt, nil
 }
 
+// Automatically generates a salt if nil is passed
 func Hash(password []byte, salt []byte) (string, error) {
 	saltLength := 16
 	actualSaltLength := len(salt)
