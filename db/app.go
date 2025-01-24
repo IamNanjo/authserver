@@ -1,7 +1,7 @@
 package db
 
 // Populates App.Domains
-func GetApp(id string) (App, error) {
+func GetAppById(id string) (App, error) {
 	app := App{}
 
 	conn := Connection()
@@ -21,7 +21,25 @@ func GetApp(id string) (App, error) {
 func GetApps() ([]App, error) {
 	apps := []App{}
 
-	err := Connection().Select(&apps, "SELECT * FROM App WHERE visibility = 1")
+	err := Connection().Select(&apps, "SELECT * FROM App")
 
 	return apps, err
+}
+
+func CreateApp(name string, description string) (string, error) {
+	id, err := GenerateId(10)
+	if err != nil {
+		return id, err
+	}
+
+	tx, err := Connection().Begin()
+	if err != nil {
+		return id, err
+	}
+
+	tx.Exec("INSERT INTO App (id, name, description) VALUES ($1, $2, $3)", id, name, description)
+
+	tx.Commit()
+
+	return id, nil
 }

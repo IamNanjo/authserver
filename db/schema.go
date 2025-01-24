@@ -10,14 +10,6 @@ var Role = struct {
 	Administrator: 3,
 }
 
-var AppVisibility = struct {
-	Hidden  int
-	Visible int
-}{
-	Hidden:  0,
-	Visible: 1,
-}
-
 type Migration struct {
 	Id int `db:"id"`
 }
@@ -31,7 +23,6 @@ type App struct {
 	Id          string `db:"id"`
 	Name        string `db:"name"`
 	Description string `db:"description"`
-	Visibility  int    `db:"visibility"`
 	Domains     []Domain
 }
 
