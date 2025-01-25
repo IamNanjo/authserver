@@ -17,10 +17,10 @@ func TestSetup(t *testing.T) {
 	}
 
 	// Truncate tables
-	Connection().Exec(`
-		DELETE FROM App;
+	Connection().Exec(
+		`DELETE FROM App;
 		DELETE FROM Domain;
 		DELETE FROM User;
-		DELETE FROM AppUser;
-		`)
+		DELETE FROM AppUser;`,
+	)
 }
