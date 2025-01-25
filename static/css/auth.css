@@ -1,21 +1,33 @@
+main {
+    width: 20em;
+    max-width: 95%;
+    gap: 2em;
+}
+main > * {
+    width: 100%;
+}
+
 .title {
+    margin-bottom: 1em;
+    padding-top: 20vh;
+    padding-top: 20svh;
+    text-align: center;
     font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: 2em;
 }
 
 .password-auth__form {
     display: flex;
     flex-direction: column;
     gap: 1.5em;
+    width: 100%;
 }
 
 .password-auth__form-group {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    width: 20em;
-    max-width: 100%;
+    width: 100%;
 }
 
 .password-auth__form-label {
@@ -24,7 +36,7 @@
 
 .password-auth__form-field {
     width: 100%;
-    background-color: #121212;
+    background-color: var(--mantle);
     color: white;
     padding: 0.25em 0.5em;
     font-size: 1.25rem;
@@ -33,17 +45,12 @@
     border-radius: 6px;
 }
 
-.password-auth__form-submit {
-    background-color: white;
-    color: black;
-    width: 100%;
-    padding: 0.75em 1.5em;
-    border-radius: 6px;
-    font-weight: 700;
+.password-auth__form-register {
+    align-self: flex-end;
 }
 
 .error {
-    background-color: #121212;
+    background-color: var(--mantle);
     color: #ff6961;
     padding: 1em 0.5em;
     border-radius: 4px;
@@ -61,4 +68,15 @@ input:user-invalid {
 
 input:user-valid {
     outline-color: #a6e3a1;
+}
+
+.or {
+    color: #7f7f7f;
+    font-weight: 500;
+    text-align: center;
+}
+
+#or-passkey,
+#passkey {
+    display: none;
 }
