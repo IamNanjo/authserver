@@ -4,9 +4,6 @@ NC='\033[0m'
 YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 
-echo -e "${YELLOW}Generating templ pages$NC"
-templ generate &&
-echo &&
 go mod tidy
 
 if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
