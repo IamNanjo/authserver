@@ -75,3 +75,5 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("HX-Location", "/")
 	w.WriteHeader(http.StatusMovedPermanently)
 }
+
+func PasskeyAuth(w http.ResponseWriter, r *http.Request) {}
