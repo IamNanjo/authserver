@@ -1,5 +1,7 @@
 package db
 
+import "errors"
+
 // Populates App.Domains
 func GetAppById(id string) (App, error) {
 	app := App{}
@@ -26,13 +28,52 @@ func GetApps() ([]App, error) {
 	return apps, err
 }
 
+func GetAppManagers(app string) ([]User, error) {
+	managers := []User{}
+
+	err := Connection().Select(&managers,
+		`SELECT
+			u.id as id,
+			u.name as name,
+			u.password as password,
+			u.email,
+			u.role as role
+		FROM User u
+		INNER JOIN AppManager am
+		ON u.id = am.user
+		WHERE am.app = $1`,
+		app,
+	)
+
+	return managers, err
+}
+
+// Returns the ID of the new App
 func CreateApp(name string, description string) (string, error) {
-	id, err := GenerateId(10)
-	if err != nil {
-		return id, err
+	connection := Connection()
+	var remainingAttempts = 5
+	var id = ""
+	var err error
+
+	for {
+		if remainingAttempts == 0 {
+			return id, errors.New("Could not create unique ID")
+		}
+
+		id, err = GenerateId(10)
+		if err != nil {
+			return id, err
+		}
+
+		err = connection.Get(nil, "SELECT 1 FROM User WHERE id = $1", id)
+		if err != nil {
+			break
+		}
+
+		remainingAttempts--
 	}
 
-	tx, err := Connection().Begin()
+	tx, err := connection.Begin()
 	if err != nil {
 		return id, err
 	}
