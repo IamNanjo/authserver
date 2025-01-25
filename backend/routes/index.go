@@ -54,7 +54,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = pages.Auth(app).Render(context.Background(), w)
+	err = pages.Auth(app, redirectTo).Render(context.Background(), w)
 	if err != nil {
 		Error(w, http.StatusInternalServerError, "Could not render the page")
 		return

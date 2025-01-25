@@ -13,7 +13,7 @@ import (
 	"github.com/IamNanjo/authserver/icons"
 )
 
-func Auth(app db.App) templ.Component {
+func Auth(app db.App, redirect string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -63,7 +63,20 @@ func Auth(app db.App) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h1><form class=\"password-auth__form\" hx-post=\"/api/auth/password\" hx-swap=\"outerHTML\" hx-target=\"#error\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email-username\">Email or username</label> <input required id=\"email-username\" class=\"password-auth__form-field\" type=\"text\" name=\"email-or-username\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Log in with password</span></button><div id=\"error\" class=\"error hidden\"></div><a class=\"password-auth__form-register\" href=\"/register\">No account? Sign up</a></form><div id=\"or-passkey\" class=\"or\"><span>or</span></div><div id=\"passkey\"><button id=\"passkey-button\" class=\"button button-secondary\"><span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h1><form class=\"password-auth__form\" hx-post=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/api/auth/password?app=" + app.Id + "&redirect=" + redirect)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/auth.templ`, Line: 17, Col: 105}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"outerHTML\" hx-target=\"#error\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email-username\">Email or username</label> <input required id=\"email-username\" class=\"password-auth__form-field\" type=\"text\" name=\"email-or-username\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Log in with password</span></button><div id=\"error\" class=\"error hidden\"></div><a class=\"password-auth__form-register\" href=\"/register\">No account? Sign up</a></form><div id=\"or-passkey\" class=\"or\"><span>or</span></div><div id=\"passkey\"><button id=\"passkey-button\" class=\"button button-secondary\"><span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -71,7 +84,7 @@ func Auth(app db.App) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</span><span>Log in with passkey</span></button></div></main>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span><span>Log in with passkey</span></button></div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

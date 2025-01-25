@@ -5,7 +5,7 @@ import (
 "github.com/IamNanjo/authserver/icons"
 )
 
-templ Auth(app db.App) {
+templ Auth(app db.App, redirect string) {
 {{
 var pageTitle = app.Name + " | Authenticate"
 var pageStyle = "auth.css"
@@ -14,7 +14,8 @@ var pageScript = "auth.js"
 @Layout(pageTitle, pageStyle, pageScript) {
 <main>
 	<h1 class="title">Authenticate to { app.Name }</h1>
-	<form class="password-auth__form" hx-post="/api/auth/password" hx-swap="outerHTML" hx-target="#error">
+	<form class="password-auth__form" hx-post={ "/api/auth/password?app=" + app.Id + "&redirect=" + redirect }
+		hx-swap="outerHTML" hx-target="#error">
 		<div class="password-auth__form-group">
 			<label class="password-auth__form-label" for="email-username">Email or username</label>
 			<input required id="email-username" class="password-auth__form-field" type="text" name="email-or-username"
