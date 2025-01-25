@@ -12,7 +12,7 @@ func GetUserByEmailOrUsername(emailOrUsername string) (User, error) {
 		FROM User
 		WHERE email=$1
 			OR name=$1
-		`)
+		`, emailOrUsername)
 
 	return user, err
 }
