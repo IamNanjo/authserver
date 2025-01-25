@@ -34,7 +34,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app, err := db.GetApp(appId)
+	app, err := db.GetAppById(appId)
 	if err != nil {
 		Error(w, http.StatusBadRequest, "Invalid authentication URL. App not found")
 		return
@@ -61,17 +61,14 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func postIndex(w http.ResponseWriter, r *http.Request) {
-	_ = r
-	w.WriteHeader(http.StatusMethodNotAllowed)
-}
-
 func Index(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		getIndex(w, r)
-	case "POST":
-		postIndex(w, r)
+		if r.URL.Path == "/" {
+			getIndex(w, r)
+		} else {
+			pages.Error("Page not found").Render(r.Context(), w)
+		}
 	default:
 		Error(w, http.StatusMethodNotAllowed, "Invalid method "+r.Method+" for route "+r.URL.Path)
 	}
