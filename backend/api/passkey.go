@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/go-webauthn/webauthn"
+	"github.com/go-webauthn/webauthn/webauthn"
 	"net/http"
 )
 
