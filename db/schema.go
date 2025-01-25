@@ -6,8 +6,7 @@ var Role = struct {
 	Administrator int
 }{
 	User:          1,
-	Manager:       2,
-	Administrator: 3,
+	Administrator: 2,
 }
 
 type Migration struct {
