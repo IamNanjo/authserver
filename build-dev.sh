@@ -12,7 +12,7 @@ if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 	echo "Skipping tests"
 else 
 	echo -e "${YELLOW}Running tests$NC"
-	go test ./...
+	go test -count=1 ./...
 
 	if [ $? -ne 0 ]; then
 		echo "Tests failed. Fix issues first"
