@@ -24,6 +24,8 @@ func StartServer(addr string, staticFiles fs.FS) {
 	http.HandleFunc("/api/auth/passkey-login", api.PasskeyBeginLogin)
 	http.HandleFunc("/api/auth/passkey-verify", api.PasskeyFinishLogin)
 
+	http.HandleFunc("/error", routes.Error)
+
 	http.HandleFunc("/", routes.Index)
 
 	http.ListenAndServe(addr, nil)
