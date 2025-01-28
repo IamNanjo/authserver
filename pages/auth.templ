@@ -18,7 +18,7 @@ var pageScript = "auth.js"
 				class="password-auth__form"
 				hx-post={ "/api/auth/password?app=" + app.Id + "&redirect=" + redirect }
 				hx-swap="outerHTML"
-				hx-target="#error"
+				hx-target="find .error"
 			>
 				<div class="password-auth__form-group">
 					<label class="password-auth__form-label" for="email-username">Email or username</label>
