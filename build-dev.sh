@@ -13,7 +13,8 @@ if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 	echo "Skipping tests"
 else 
 	echo -e "${YELLOW}Running tests$NC"
-	go test -count=1 ./...
+
+	AUTH_SERVER_DB="$(dirname $(realpath $0))/dist/authserver_test.db" go test -count=1 ./...
 
 	if [ $? -ne 0 ]; then
 		echo -e "${RED}Tests failed. Fix issues first$NC"
