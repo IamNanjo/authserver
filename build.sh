@@ -4,13 +4,18 @@ NC='\033[0m'
 YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 
+SCRIPT_PATH="$(dirname $(realpath $0))"
+
+mkdir -p "$SCRIPT_PATH/dist"
+
 go mod tidy
 
 if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 	echo "Skipping tests"
 else 
 	echo -e "${YELLOW}Running tests$NC"
-	go test ./...
+
+	AUTH_SERVER_DB="$SCRIPT_PATH/dist/authserver_test.db" go test -count=1 ./...
 
 	if [ $? -ne 0 ]; then
 		echo "Tests failed. Fix issues first"
