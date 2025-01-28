@@ -5,6 +5,10 @@ YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 
+SCRIPT_PATH="$(dirname $(realpath $0))"
+
+mkdir -p "$SCRIPT_PATH/dist"
+
 echo -e "${YELLOW}Generating templ pages$NC" &&
 templ generate &&
 go mod tidy &&
@@ -14,7 +18,7 @@ if [ "$1" = "--skiptests" ] || [ "$1" = "-st" ]; then
 else 
 	echo -e "${YELLOW}Running tests$NC"
 
-	AUTH_SERVER_DB="$(dirname $(realpath $0))/dist/authserver_test.db" go test -count=1 ./...
+	AUTH_SERVER_DB="$SCRIPT_PATH/dist/authserver_test.db" go test -count=1 ./...
 
 	if [ $? -ne 0 ]; then
 		echo -e "${RED}Tests failed. Fix issues first$NC"
