@@ -17,7 +17,6 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		err := pages.Index().Render(context.Background(), w)
 		if err != nil {
 			http.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
-			http.Redirect(w, r, "/error?status=500&error=", http.StatusMovedPermanently)
 			return
 		}
 		return
