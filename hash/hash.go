@@ -99,8 +99,6 @@ func HashValidate(password []byte, hash string) (bool, error) {
 		return false, err
 	}
 
-	fmt.Printf("Salt (%d characters): %v", len(salt), salt)
-
 	hashedPassword, err := Hash(password, salt)
 	if err != nil {
 		return false, err
