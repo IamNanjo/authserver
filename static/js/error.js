@@ -1,1 +1,1 @@
-document.getElementById("back").onclick = window.history.back();
+document.getElementById("back").onclick = () => window.history.back();
