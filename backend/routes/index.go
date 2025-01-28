@@ -67,7 +67,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			getIndex(w, r)
 		} else {
-			pages.Error("Page not found").Render(r.Context(), w)
+			err := pages.Error("Page not found").Render(r.Context(), w)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+			}
 		}
 	default:
 		Error(w, http.StatusMethodNotAllowed, "Invalid method "+r.Method+" for route "+r.URL.Path)
