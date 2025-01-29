@@ -9,6 +9,19 @@ import (
 	"strings"
 )
 
+func validateRedirectURL(domains []db.Domain, url url.URL) bool {
+	redirectURLIsAllowed := false
+
+	for _, domain := range domains {
+		hostname := url.Hostname()
+		if domain.Name == hostname || (domain.Name[0] == '.' && strings.HasSuffix(domain.Name, url.Hostname())) {
+			redirectURLIsAllowed = true
+		}
+	}
+
+	return redirectURLIsAllowed
+}
+
 func getIndex(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 
@@ -40,14 +53,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	redirectURLIsAllowed := false
-
-	for _, domain := range app.Domains {
-		hostname := redirectURL.Hostname()
-		if domain.Name == hostname || (domain.Name[0] == '.' && strings.HasSuffix(domain.Name, redirectURL.Hostname())) {
-			redirectURLIsAllowed = true
-		}
-	}
+	redirectURLIsAllowed := validateRedirectURL(app.Domains, *redirectURL)
 
 	if !redirectURLIsAllowed {
 		http.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
