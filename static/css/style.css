@@ -20,6 +20,7 @@
     --subtext0: #a6adc8;
     --subtext1: #bac2de;
     --text: #cdd6f4;
+    --blue: #8aadf4;
     --green: #a6e3a1;
     --peach: #fab387;
     --red: #f38ba8;
@@ -38,6 +39,7 @@
     --subtext0: #a6adc8;
     --subtext1: #bac2de;
     --text: #cdd6f4;
+    --blue: #89b4fa;
     --green: #a6e3a1;
     --peach: #fab387;
     --red: #f38ba8;
@@ -56,6 +58,7 @@
     --subtext0: #a5adcb;
     --subtext1: #b8c0e0;
     --text: #cad3f5;
+    --blue: #8aadf4;
     --green: #a6da95;
     --peach: #f5a97f;
     --red: #ed8796;
@@ -74,6 +77,7 @@
     --subtext0: #a5adce;
     --subtext1: #b5bfe2;
     --text: #c6d0f5;
+    --blue: #8caaee;
     --green: #a6d189;
     --peach: #ef9f76;
     --red: #e78284;
@@ -92,6 +96,7 @@
     --subtext0: #6c6f85;
     --subtext1: #5c5f77;
     --text: #4c4f69;
+    --blue: #1e66f5;
     --green: #40a02b;
     --peach: #fe640b;
     --red: #d20f39;
@@ -122,7 +127,7 @@ main {
 }
 
 a {
-    color: inherit;
+    color: var(--blue);
     text-decoration: none;
 }
 
