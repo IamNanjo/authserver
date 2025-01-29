@@ -9,8 +9,8 @@ main > * {
 
 .title {
     margin-bottom: 1em;
-    padding-top: 20vh;
-    padding-top: 20svh;
+    padding-top: 10vh;
+    padding-top: 10svh;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 500;
@@ -71,12 +71,24 @@ input:user-valid {
 }
 
 .or {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--base);
     color: var(--subtext0);
     font-weight: 500;
     text-align: center;
 }
+.or-line {
+    flex-grow: 1;
+    background-color: currentColor;
+    height: 1px;
+}
+.or-text {
+    padding-inline: 1em;
+}
 
-#or-passkey,
+#or,
 #passkey {
     display: none;
 }

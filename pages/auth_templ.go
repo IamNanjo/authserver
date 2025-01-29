@@ -38,6 +38,7 @@ func Auth(app db.App, redirect string) templ.Component {
 		var pageTitle = app.Name + " | Authenticate"
 		var pageStyle = "auth.css"
 		var pageScript = "auth.js"
+		var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -57,7 +58,7 @@ func Auth(app db.App, redirect string) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(app.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/auth.templ`, Line: 16, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/auth.templ`, Line: 17, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -68,15 +69,24 @@ func Auth(app db.App, redirect string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/api/auth/password?app=" + app.Id + "&redirect=" + redirect)
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/api/auth/password" + queryParams)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/auth.templ`, Line: 19, Col: 74}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/auth.templ`, Line: 18, Col: 79}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"outerHTML\" hx-target=\"find .error\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email-username\">Email or username</label> <input required autofocus id=\"email-username\" class=\"password-auth__form-field\" type=\"text\" name=\"email-or-username\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Log in with password</span></button><div id=\"error\" class=\"error hidden\"></div><a class=\"password-auth__form-register\" href=\"/register\">No account? Sign up</a></form><div id=\"or-passkey\" class=\"or\"><span>or</span></div><div id=\"passkey\"><button id=\"passkey-button\" class=\"button button-secondary\"><span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"outerHTML\" hx-target=\"find .error\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email-username\">Email or username</label> <input required autofocus id=\"email-username\" class=\"password-auth__form-field\" type=\"text\" name=\"email-or-username\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Log in with password</span></button><div id=\"error\" class=\"error hidden\"></div><a class=\"password-auth__form-register\" href=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 templ.SafeURL = templ.SafeURL("/register" + queryParams)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var5)))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\">Don't have an account?</a></form><div id=\"or\" class=\"or\"><span class=\"or-line\"></span> <span class=\"or-text\">or</span> <span class=\"or-line\"></span></div><div id=\"passkey\"><button id=\"passkey-button\" class=\"button button-secondary\"><span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -84,7 +94,7 @@ func Auth(app db.App, redirect string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span><span>Log in with passkey</span></button></div></main>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span> <span>Log in with passkey</span></button></div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
