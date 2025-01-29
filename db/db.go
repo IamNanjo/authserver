@@ -38,13 +38,14 @@ func Initialize(path *string) error {
 		if err != nil {
 			return err
 		}
-		_, err = tx.Exec(string(migration.content))
 
-		err = tx.Commit()
+		_, err = tx.Exec(string(migration.content))
 		if err != nil {
 			os.Stderr.WriteString("Migration failed: " + migration.filename + "\n" + err.Error() + "\n")
 			os.Exit(1)
 		}
+
+		err = tx.Commit()
 	}
 
 	migrationsFinished := len(migrations)
