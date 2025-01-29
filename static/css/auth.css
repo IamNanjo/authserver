@@ -62,11 +62,15 @@ main > * {
     display: none;
 }
 
-input:user-invalid {
+input:focus-visible {
+    outline-color: currentColor;
+}
+
+input:user-invalid:not(:focus-visible) {
     outline-color: #ff6961;
 }
 
-input:user-valid {
+input:user-valid:not(:focus-visible) {
     outline-color: #a6e3a1;
 }
 
