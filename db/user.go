@@ -11,9 +11,21 @@ func GetUserById(id string) (User, error) {
 	return user, err
 }
 
+func GetUserByEmail(email string) (User, error) {
+	user := User{}
+	err := Connection().Get(&user, "SELECT * FROM User WHERE email = $1", email)
+	return user, err
+}
+
+func GetUserByUsername(username string) (User, error) {
+	user := User{}
+	err := Connection().Get(&user, "SELECT * FROM User WHERE name = $1", username)
+	return user, err
+}
+
 func GetUserByEmailOrUsername(emailOrUsername string) (User, error) {
 	user := User{}
-	err := Connection().Get(&user, "SELECT * FROM User WHERE email=$1 OR name=$1", emailOrUsername)
+	err := Connection().Get(&user, "SELECT * FROM User WHERE email = $1 OR name = $1", emailOrUsername)
 	return user, err
 }
 
