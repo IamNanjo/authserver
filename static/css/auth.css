@@ -1,7 +1,8 @@
 main {
+    gap: 2em;
     width: 20em;
     max-width: 95%;
-    gap: 2em;
+    margin: auto;
 }
 main > * {
     width: 100%;
@@ -9,8 +10,6 @@ main > * {
 
 .title {
     margin-bottom: 1em;
-    padding-top: 10vh;
-    padding-top: 10svh;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 500;
