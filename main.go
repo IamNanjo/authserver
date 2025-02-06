@@ -13,7 +13,7 @@ var staticFiles embed.FS
 
 func main() {
 	var err error
-	addr := os.Getenv("AUTH_SERVER_PORT")
+	addr := os.Getenv("AUTH_SERVER_ADDRESS")
 	if addr == "" {
 		addr = ":8080"
 	}
