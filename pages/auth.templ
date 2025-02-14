@@ -19,8 +19,8 @@ var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 		hx-target="find .error">
 		<div class="password-auth__form-group">
 			<label class="password-auth__form-label" for="email-username">Email or username</label>
-			<input required id="email-username" class="password-auth__form-field" type="text"
-				name="email-or-username" autocomplete="username" />
+			<input required id="email-username" class="password-auth__form-field" type="text" name="email-or-username"
+				autocomplete="username" />
 		</div>
 		<div class="password-auth__form-group">
 			<label class="password-auth__form-label" for="password">Password</label>
@@ -28,7 +28,7 @@ var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 				autocomplete="current-password" />
 		</div>
 		<button class="button" type="submit"><span>Log in with password</span></button>
-		<div id="error" class="error hidden"></div>
+		<div class="error hidden"></div>
 		<a class="password-auth__form-register" href={ templ.SafeURL("/register" + queryParams) }>
 			Don't have an
 			account?
