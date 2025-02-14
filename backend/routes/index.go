@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func validateRedirectURL(domains []db.Domain, url url.URL) bool {
+func ValidateRedirectURL(domains []db.Domain, url url.URL) bool {
 	redirectURLIsAllowed := false
 
 	for _, domain := range domains {
@@ -53,7 +53,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	redirectURLIsAllowed := validateRedirectURL(app.Domains, *redirectURL)
+	redirectURLIsAllowed := ValidateRedirectURL(app.Domains, *redirectURL)
 
 	if !redirectURLIsAllowed {
 		http.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
