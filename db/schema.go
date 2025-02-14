@@ -51,3 +51,21 @@ type AppWithUsers struct {
 	Visibility  int    `db:"visibility"`
 	Users       []UserWithAppRole
 }
+
+type Session struct {
+	Id        string
+	User      string
+	Device    string
+	LastUsed  int
+	ExpiresAt int
+	Token     string
+}
+
+type OAuthToken struct {
+	Id        int
+	User      string
+	Token     string
+	Provider  string
+	CreatedAt int
+	ExpiresAt int
+}
