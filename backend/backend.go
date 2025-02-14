@@ -54,7 +54,7 @@ func StartServer(addr string, staticFiles fs.FS) {
 		http.HandleFunc("POST /api/auth/passkey/finish/{$}", api.PasskeyFinishLogin)
 	}
 
-	http.HandleFunc("GET /register/{$}", routes.Register)
+	http.HandleFunc("GET /register/{$}", routes.RegisterPage)
 	http.HandleFunc("GET /error/{$}", routes.Error)
 	http.HandleFunc("GET /{$}", routes.Index)
 
