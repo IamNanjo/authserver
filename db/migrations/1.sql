@@ -1,6 +1,6 @@
 -- Migration
 CREATE TABLE IF NOT EXISTS Migration (id INTEGER PRIMARY KEY);
-INSERT INTO Migration VALUES (1);
+INSERT INTO Migration (id) VALUES (1);
 
 -- App
 CREATE TABLE IF NOT EXISTS App (
