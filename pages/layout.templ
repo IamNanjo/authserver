@@ -16,8 +16,8 @@ templ Layout(pageTitle string, pageStyle string, pageScript string) {
 			if pageStyle != "" {
 				<link rel="stylesheet" href={ "/static/css/" + pageStyle }/>
 			}
+			<script src="/static/js/global.js"></script>
 			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
-			<script src="/static/js/theme.js"></script>
 			if pageScript != "" {
 				<script defer src={ "/static/js/" + pageScript }></script>
 			}
@@ -29,7 +29,7 @@ templ Layout(pageTitle string, pageStyle string, pageScript string) {
 				}
 			</title>
 		</head>
-		<body>
+		<body class="theme-mocha">
 			{ children... }
 		</body>
 	</html>
