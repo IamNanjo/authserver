@@ -1,14 +1,5 @@
 package db
 
-var Role = struct {
-	User          int
-	Manager       int
-	Administrator int
-}{
-	User:          1,
-	Administrator: 2,
-}
-
 type Migration struct {
 	Id int `db:"id"`
 }
@@ -31,6 +22,11 @@ type User struct {
 	Password string `db:"password"`
 	Email    string `db:"email"`
 	Role     int    `db:"role"`
+}
+
+type Role struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 type AppUser struct {

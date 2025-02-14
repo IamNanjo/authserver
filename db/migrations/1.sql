@@ -25,6 +25,15 @@ CREATE TABLE IF NOT EXISTS User (
 	role INTEGER NOT NULL DEFAULT 1
 );
 
+-- User role
+CREATE TABLE IF NOT EXISTS UserRole (
+	id INTEGER PRIMARY KEY, -- rowid
+	name TEXT NOT NULL,
+);
+INSERT INTO Role (id, name) VALUES 
+	(1, 'User'),
+	(2, 'Administrator');
+
 CREATE UNIQUE INDEX IF NOT EXISTS idx_user_name ON User (name COLLATE NOCASE);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email ON User (email COLLATE NOCASE);
 
