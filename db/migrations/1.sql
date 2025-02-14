@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 -- User role
-CREATE TABLE IF NOT EXISTS UserRole (
+CREATE TABLE IF NOT EXISTS Role (
 	id INTEGER PRIMARY KEY, -- rowid
-	name TEXT NOT NULL,
+	name TEXT NOT NULL
 );
 INSERT INTO Role (id, name) VALUES 
 	(1, 'User'),
