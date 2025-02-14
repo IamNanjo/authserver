@@ -61,9 +61,10 @@ CREATE TABLE IF NOT EXISTS Session (
 CREATE TABLE IF NOT EXISTS OAuthToken (
     id INTEGER PRIMARY KEY,
     user TEXT NOT NULL,
-    token TEXT NOT NULL UNIQUE,
+    token TEXT NOT NULL,
     provider TEXT NOT NULL,
+	created_at TIMESTAMP NOT NULL,
     expires_at TIMESTAMP NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE (user, token),
     FOREIGN KEY(user) REFERENCES User(id)
 );
