@@ -1,11 +1,12 @@
 package db
 
 import (
-	"github.com/jmoiron/sqlx"
-	_ "modernc.org/sqlite"
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/jmoiron/sqlx"
+	_ "modernc.org/sqlite"
 )
 
 var dbPath string = ""
@@ -77,5 +78,14 @@ func getDefaultPath() {
 
 // Returns connection and panics on error
 func Connection() *sqlx.DB {
-	return sqlx.MustConnect("sqlite", dbPath)
+	connection := sqlx.MustConnect("sqlite", dbPath)
+
+	// Pragma options
+	connection.MustExec(`
+		PRAGMA foreign_keys = ON;
+		PRAGMA journal_mode = WAL;
+		PRAGMA auto_vacuum = FULL;
+	`)
+
+	return connection
 }
