@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS AppManager (
 
 -- Sessions
 CREATE TABLE IF NOT EXISTS Session (
-    id TEXT PRIMARY KEY NOT NULL,  -- UUID or random string
+    id TEXT PRIMARY KEY NOT NULL,
     user TEXT NOT NULL,
     device TEXT DEFAULT 'Unknown device',
     last_used INTEGER NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS Session (
 );
 
 CREATE TABLE IF NOT EXISTS OAuthToken (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY,
     user TEXT NOT NULL,
     token TEXT NOT NULL UNIQUE,
     provider TEXT NOT NULL,
