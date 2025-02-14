@@ -1,19 +1,29 @@
 package api
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/IamNanjo/authserver/components"
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/hash"
-	"net/http"
-	"time"
 )
 
-func PasswordAuth(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		return
+// Ensures cookie is valid. Also ensures session exists in DB.
+func AuthCookieIsValid(cookie *http.Cookie) bool {
+	err := cookie.Valid()
+	if err != nil {
+		return false
 	}
 
+	// sessionId := cookie.Value
+
+	// TODO: Ensure session exists and has not expired
+
+	return true
+}
+
+func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	app := query.Get("app")
 	redirect := query.Get("redirect")
@@ -75,5 +85,3 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("HX-Location", "/")
 	w.WriteHeader(http.StatusMovedPermanently)
 }
-
-func PasskeyAuth(w http.ResponseWriter, r *http.Request) {}
