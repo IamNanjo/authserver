@@ -1,6 +1,7 @@
 # Authentication server
 
 [![Go](https://github.com/IamNanjo/auth-server/actions/workflows/go.yml/badge.svg)](https://github.com/IamNanjo/auth-server/actions/workflows/go.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/IamNanjo/authserver)](https://goreportcard.com/report/github.com/IamNanjo/authserver)
 
 ```
 This project is in very early development.
