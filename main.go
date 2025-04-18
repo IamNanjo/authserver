@@ -13,12 +13,12 @@ var staticFiles embed.FS
 
 func main() {
 	var err error
-	addr := os.Getenv("AUTH_SERVER_ADDRESS")
+	addr := os.Getenv("AUTHSERVER_ADDRESS")
 	if addr == "" {
 		addr = ":8080"
 	}
 
-	dbPath := os.Getenv("AUTH_SERVER_DB")
+	dbPath := os.Getenv("AUTHSERVER_DB")
 
 	// Override environment variables with cli flag
 	flag.StringVar(&addr, "addr", addr, "Listen address")
