@@ -41,3 +41,5 @@ require (
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.10.0 // indirect
 )
+
+tool github.com/a-h/templ/cmd/templ
