@@ -63,6 +63,7 @@ main > * {
 
 input:focus-visible {
     outline-color: currentColor;
+    outline-offset: 0;
 }
 
 input:user-invalid:not(:focus-visible) {

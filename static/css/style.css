@@ -7,6 +7,12 @@
     font: inherit;
 }
 
+*:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--peach);
+    outline-offset: 2px;
+}
+
 .theme-black {
     --crust: #11111b;
     --mantle: #181825;
