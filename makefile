@@ -31,14 +31,14 @@ templ:
 
 clean:
 	@echo -e "${YELLOW}Cleaning test DB and binaries${NC}"
-	@rm -fv "${TEST_DB_PATH}" "${TEST_DB_PATH}-shm" "${TEST_DB_PATH}-wal"
+	@rm -fv "${TEST_DB_PATH}" "${TEST_DB_PATH}-shm" "${TEST_DB_PATH}-wal" "${DIST_PATH}/${NAME}"
 	@for platform in ${PLATFORMS}; do \
 		IFS='/' read -r GOOS GOARCH <<< "$$platform"; unset IFS; \
 		filename="${DIST_PATH}/${NAME}-$${GOOS}-$${GOARCH}"; \
 		if [ "$$GOOS" = "windows" ]; then \
 			filename+=".exe"; \
 		fi; \
-		rm -fv "${filename}"; \
+		rm -fv "$$filename"; \
 	done
 	@echo -e "${GREEN}Files cleaned${NC}\n"
 
@@ -49,7 +49,7 @@ test:
 
 dev:
 	@echo -e "${YELLOW}Building development version of ${NAME}${NC}"
-	@go build -o dist/authserver -v ${DEV_FLAGS} && echo -e "${GREEN}Finished building development version of ${NAME}${NC}\n"
+	@go build -o "dist/${NAME}" -v ${DEV_FLAGS} && echo -e "${GREEN}Finished building development version of ${NAME}${NC}\n"
 	@echo -e "${YELLOW}Starting server${NC}"
 	@if command -v sqlite3 &> /dev/null; then \
 		appId=$$(sqlite3 -column dist/authserver_test.db "SELECT id FROM App;"); \
