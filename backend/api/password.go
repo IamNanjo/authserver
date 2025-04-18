@@ -82,6 +82,9 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &cookie)
 
-	w.Header().Set("HX-Location", "/")
-	w.WriteHeader(http.StatusMovedPermanently)
+	if r.Header.Get("HX-Request") == "" {
+		http.Redirect(w, r, "/", 301)
+	} else {
+		w.Header().Set("HX-Location", "/")
+	}
 }
