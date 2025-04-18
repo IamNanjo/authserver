@@ -10,5 +10,5 @@ Object.defineProperty(window, "globalTheme", {
 
 window.addEventListener(
     "DOMContentLoaded",
-    () => (window.globalTheme = window.globalTheme)
+    () => (window.globalTheme = window.globalTheme),
 );
