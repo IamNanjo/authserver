@@ -31,6 +31,7 @@ main > * {
 
 .password-auth__form-label {
     color: var(--subtext0);
+    user-select: none;
 }
 
 .password-auth__form-field {
@@ -80,6 +81,7 @@ input:user-valid:not(:focus-visible) {
     color: var(--subtext0);
     font-weight: 500;
     text-align: center;
+    user-select: none;
 }
 .or-line {
     flex-grow: 1;
