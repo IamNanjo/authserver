@@ -2,6 +2,7 @@ main {
     gap: 2em;
     width: 20em;
     max-width: 95%;
+    margin-block: auto;
 }
 main > * {
     width: 100%;
@@ -50,7 +51,7 @@ main > * {
 
 .error {
     background-color: var(--mantle);
-    color: #ff6961;
+    color: var(--red);
     padding: 1em 0.5em;
     border-radius: 4px;
     font-size: 1.125rem;
@@ -66,7 +67,7 @@ input:focus-visible {
 }
 
 input:user-invalid:not(:focus-visible) {
-    outline-color: #ff6961;
+    outline-color: var(--red);
 }
 
 input:user-valid:not(:focus-visible) {
