@@ -10,6 +10,9 @@ var testAppId string
 func TestCreateApp(t *testing.T) {
 	var err error
 	testAppId, err = CreateApp("TestApp", "")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	_, err = GetAppById(testAppId)
 	if err != nil {
