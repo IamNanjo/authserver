@@ -1,9 +1,10 @@
 package api
 
 import (
-	"encoding/json"
-	"github.com/IamNanjo/authserver/db"
 	"net/http"
+
+	"github.com/IamNanjo/authserver/backend/utils"
+	"github.com/IamNanjo/authserver/db"
 )
 
 func UserExists(w http.ResponseWriter, r *http.Request) {
@@ -14,11 +15,7 @@ func UserExists(w http.ResponseWriter, r *http.Request) {
 	if email != "" {
 		_, err := db.GetUserByEmail(email)
 		if err == nil {
-			w.WriteHeader(http.StatusConflict)
-			json.NewEncoder(w).Encode(ErrorResponse{
-				Reason: "email",
-				Error:  "A user with this email already exists",
-			})
+			utils.Error(w, r, http.StatusConflict, "A user with this email already exists")
 			return
 		}
 	}
@@ -26,11 +23,7 @@ func UserExists(w http.ResponseWriter, r *http.Request) {
 	if username != "" {
 		_, err := db.GetUserByUsername(username)
 		if err == nil {
-			w.WriteHeader(http.StatusConflict)
-			json.NewEncoder(w).Encode(ErrorResponse{
-				Reason: "username",
-				Error:  "A user with this username already exists",
-			})
+			utils.Error(w, r, http.StatusConflict, "A user with this username already exists")
 			return
 		}
 	}

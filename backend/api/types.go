@@ -28,8 +28,3 @@ type EmailAndUsernameRequestBody struct {
 	Email    string `json:"email"`
 	Username string `json:"username"`
 }
-
-type ErrorResponse struct {
-	Reason string `json:"reason"`
-	Error  string `json:"error"`
-}
