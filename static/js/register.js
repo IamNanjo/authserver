@@ -4,6 +4,24 @@ const emailInput = document.getElementById("email");
 /** @type {HTMLInputElement} */
 const usernameInput = document.getElementById("username");
 
+document.body.addEventListener("htmx:afterRequest", (e) => {
+    /** @type {XMLHttpRequest} */
+    const xhr = e.detail.xhr;
+    let err = "Unknown error";
+    try {
+        const data = JSON.parse(xhr.response);
+        console.debug(data);
+
+        err = data.error;
+    } catch {}
+
+    window.toastNotification.add({
+        type: "error",
+        text: err,
+        timeout: 5000,
+    });
+});
+
 async function initializePasskeys() {
     if (
         !window.PublicKeyCredential ||
@@ -29,7 +47,7 @@ async function initializePasskeys() {
             }
 
             const userExistsRes = await fetch(
-                `/api/user/exists?email=${email}&username=${username}`
+                `/api/user/exists?email=${email}&username=${username}`,
             );
 
             if (userExistsRes.status !== 200) {
@@ -52,11 +70,11 @@ async function initializePasskeys() {
 
             /** @type {PublicKeyCredentialCreationOptions} */
             const publicKeyCredentialCreationOptions = await fetch(
-                "/api/auth/passkey-begin-register",
+                "/api/passkey/register/begin",
                 {
                     method: "POST",
                     body: JSON.stringify({ email, username }),
-                }
+                },
             )
                 .then((res) => res.json())
                 .catch((err) => console.error(err.message));
@@ -69,7 +87,7 @@ async function initializePasskeys() {
                 return;
             }
 
-            const response = await fetch("/api/auth/passkey");
+            const response = await fetch("/api/passkey/register/finish");
             response;
         });
 }
