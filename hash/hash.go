@@ -81,7 +81,7 @@ func Hash(password []byte, salt []byte) (string, error) {
 	var timeCost uint32 = 1
 	var memoryCost uint32 = 64 * 1024
 	var paralellism uint8 = 1
-	var keyLength uint32 = 32
+	var keyLength uint32 = 33
 
 	hashKey := argon2.IDKey(password, salt, timeCost, memoryCost, paralellism, keyLength)
 
