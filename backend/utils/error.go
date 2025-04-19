@@ -10,12 +10,11 @@ import (
 func Error(w http.ResponseWriter, r *http.Request, statusCode int, message string) {
 	accept := r.Header.Get("Accept")
 
-	if r.Header.Get("HX-Request") != "" {
+	if accept == "*/*" && r.Header.Get("HX-Request") != "" {
 		accept = "text/html"
-		w.WriteHeader(http.StatusOK)
-	} else {
-		w.WriteHeader(statusCode)
 	}
+
+	w.WriteHeader(statusCode)
 
 	switch accept {
 	case "text/html":
