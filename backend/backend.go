@@ -2,13 +2,14 @@ package backend
 
 import (
 	"fmt"
-	"github.com/IamNanjo/authserver/backend/api"
-	"github.com/IamNanjo/authserver/backend/routes"
-	"github.com/go-webauthn/webauthn/webauthn"
 	"io/fs"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/IamNanjo/authserver/backend/api"
+	"github.com/IamNanjo/authserver/backend/routes"
+	"github.com/go-webauthn/webauthn/webauthn"
 )
 
 func StartServer(addr string, staticFiles fs.FS) {
