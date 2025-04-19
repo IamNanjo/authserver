@@ -58,7 +58,7 @@ func Register(app db.App, redirect string) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(app.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/register.templ`, Line: 17, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/register.templ`, Line: 17, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -71,13 +71,13 @@ func Register(app db.App, redirect string) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/api/register/password" + queryParams)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/register.templ`, Line: 20, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/register.templ`, Line: 18, Col: 83}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"outerHTML\" hx-target=\"find .error\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email\">Email (optional)</label> <input id=\"email\" class=\"password-auth__form-field\" type=\"email\" name=\"email\" autocomplete=\"email\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"username\">Username</label> <input required id=\"username\" class=\"password-auth__form-field\" type=\"text\" name=\"username\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Create account</span></button><div class=\"error\"></div><a class=\"password-auth__form-register\" href=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"none\" hx-headers=\"{&#34;Accept&#34;: &#34;application/json&#34;}\"><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"email\">Email (optional)</label> <input id=\"email\" class=\"password-auth__form-field\" type=\"email\" name=\"email\" autocomplete=\"email\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"username\">Username</label> <input required id=\"username\" class=\"password-auth__form-field\" type=\"text\" name=\"username\" pattern=\"^(?!.*@).*\" title=\"Must not be empty and cannot contain @\" autocomplete=\"username\"></div><div class=\"password-auth__form-group\"><label class=\"password-auth__form-label\" for=\"password\">Password</label> <input required id=\"password\" class=\"password-auth__form-field\" type=\"password\" name=\"password\" autocomplete=\"current-password\"></div><button class=\"button\" type=\"submit\"><span>Create account</span></button> <a class=\"password-auth__form-register\" href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
