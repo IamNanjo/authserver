@@ -20,6 +20,10 @@ func PasswordRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if email != "" && !utils.IsValidEmail(email) {
+		utils.Error(w, r, http.StatusBadRequest, "Invalid email provided")
+	}
+
 	_, err := db.CreateUser(username, email, password)
 	if err != nil {
 		errMsg := err.Error()
