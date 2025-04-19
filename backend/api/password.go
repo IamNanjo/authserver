@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/IamNanjo/authserver/backend/utils"
-	"github.com/IamNanjo/authserver/components"
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/hash"
 )
@@ -30,12 +29,12 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	redirect := query.Get("redirect")
 
 	if app == "" {
-		components.Error("App parameter not set", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusBadRequest, "App parameter not set")
 		return
 	}
 
 	if redirect == "" {
-		components.Error("Redirect parameter not set", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusBadRequest, "Redirect parameter not set")
 		return
 	}
 
@@ -43,28 +42,28 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	password := r.PostFormValue("password")
 
 	if emailOrUsername == "" {
-		components.Error("Email or username is missing", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusBadRequest, "Email or username is missing")
 		return
 	} else if password == "" {
-		components.Error("Password is missing", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusBadRequest, "Password is missing")
 		return
 	}
 
 	user, err := db.GetUserByEmailOrUsername(emailOrUsername)
 	if err != nil {
-		components.Error("User not found", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusNotFound, "User not found")
 		return
 	}
 
 	passwordIsCorrect, err := hash.HashValidate([]byte(password), user.Password)
 	if err != nil || !passwordIsCorrect {
-		components.Error("Incorrect password", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusUnauthorized, "Incorrect password")
 		return
 	}
 
 	sessionId, err := db.GenerateId(128)
 	if err != nil {
-		components.Error("Could not generate session ID. Please try again", nil).Render(r.Context(), w)
+		utils.Error(w, r, http.StatusInternalServerError, "Could not generate session ID. Please try again")
 		return
 	}
 
@@ -83,9 +82,5 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &cookie)
 
-	if r.Header.Get("HX-Request") == "" {
-		utils.Redirect(w, r, "/", 301)
-	} else {
-		w.Header().Set("HX-Location", "/")
-	}
+	utils.Redirect(w, r, "/", 301)
 }
