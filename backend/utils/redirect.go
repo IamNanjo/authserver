@@ -9,7 +9,7 @@ func Redirect(w http.ResponseWriter, r *http.Request, url string, statusCode int
 	if r.Header.Get("HX-Request") == "" {
 		http.Redirect(w, r, url, statusCode)
 	} else {
-		w.Header().Set("HX-Location", url)
+		w.Header().Set("HX-Redirect", url)
 		w.WriteHeader(http.StatusOK)
 	}
 }
