@@ -2,7 +2,6 @@ main {
     gap: 2em;
     width: 20em;
     max-width: 95%;
-    margin: auto;
 }
 main > * {
     width: 100%;
