@@ -2,7 +2,7 @@ main {
     justify-content: center;
     align-items: flex-start;
     width: max-content;
-    margin: auto;
+    margin-block: auto;
 }
 
 .error {
