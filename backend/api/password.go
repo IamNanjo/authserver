@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/IamNanjo/authserver/backend/utils"
 	"github.com/IamNanjo/authserver/components"
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/hash"
-	"github.com/IamNanjo/authserver/backend/utils"
 )
 
 // Ensures cookie is valid. Also ensures session exists in DB.

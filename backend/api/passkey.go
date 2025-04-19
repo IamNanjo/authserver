@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/IamNanjo/authserver/db"
 	"github.com/go-webauthn/webauthn/webauthn"
-	"net/http"
 )
 
 var WebAuthnConfig *webauthn.Config

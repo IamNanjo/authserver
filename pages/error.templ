@@ -3,15 +3,15 @@ package pages
 import "github.com/IamNanjo/authserver/components"
 
 templ Error(err string) {
-{{
+	{{
 var pageTitle = "Error"
 var pageStyle = "error.css"
 var pageScript = "error.js"
-}}
-@Layout(pageTitle, pageStyle, pageScript) {
-<main>
-	<button id="back">&larr; Back</button>
-	@components.Error(err, nil)
-</main>
-}
+	}}
+	@Layout(pageTitle, pageStyle, pageScript) {
+		<main>
+			<button id="back">&larr; Back</button>
+			@components.Error(err, nil)
+		</main>
+	}
 }
