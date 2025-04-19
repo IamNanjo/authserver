@@ -6,8 +6,8 @@ const containerStyle = {
     display: "flex",
     flexDirection: "column",
     gap: "0.5em",
-    width: "min(80%, 12em)",
-    height: "min(80%, 10em)",
+    width: "min(80%, 14em)",
+    height: "min(80%, 25em)",
     zIndex: "1",
     overflow: "auto",
     scrollbarWidth: "none",
@@ -20,7 +20,7 @@ const notificationBaseStyle = {
     width: "100%",
     padding: "0.5em",
     borderRadius: "4px",
-    fontWeight: "700",
+    fontWeight: "500",
     transform: "translateX(150%)",
     userSelect: "none",
 };
@@ -67,14 +67,12 @@ window.toastNotification = {
         if ("timeout" in notification && !Number.isNaN(notification.timeout)) {
             setTimeout(() => {
                 this.remove({ element: el });
-            }, notification.timeout);
+            }, notification.timeout + this.config.animationSpeed);
         }
     },
     remove({ element }) {
-        setTimeout(() => {
-            element.style.transform = "translateX(150%)";
-            setTimeout(() => element.remove(), this.config.animationSpeed);
-        }, this.config.animationSpeed);
+        element.style.transform = "translateX(150%)";
+        setTimeout(() => element.remove(), this.config.animationSpeed);
     },
 };
 
