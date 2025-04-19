@@ -46,13 +46,13 @@ func StartServer(addr string, staticFiles fs.FS) {
 	http.HandleFunc("GET /api/user/exists/{$}", api.UserExists)
 
 	http.HandleFunc("POST /api/register/password", api.PasswordRegister)
-	http.HandleFunc("POST /api/auth/password/{$}", api.PasswordAuth)
+	http.HandleFunc("POST /api/auth/password", api.PasswordAuth)
 
 	if webAuthnEnabled {
-		http.HandleFunc("POST /api/register/passkey/begin/{$}", api.PasskeyBeginRegister)
-		http.HandleFunc("POST /api/register/passkey/finish/{$}", api.PasskeyFinishRegister)
-		http.HandleFunc("POST /api/auth/passkey/begin/{$}", api.PasskeyBeginLogin)
-		http.HandleFunc("POST /api/auth/passkey/finish/{$}", api.PasskeyFinishLogin)
+		http.HandleFunc("POST /api/passkey/register/begin/{$}", api.PasskeyRegisterBegin)
+		http.HandleFunc("POST /api/passkey/register/finish/{$}", api.PasskeyRegisterFinish)
+		http.HandleFunc("POST /api/passkey/auth/begin/{$}", api.PasskeyLoginBegin)
+		http.HandleFunc("POST /api/passkey/auth/finish/{$}", api.PasskeyLoginFinish)
 	}
 
 	http.HandleFunc("GET /register/{$}", routes.RegisterPage)
