@@ -2,6 +2,15 @@ package db
 
 import "errors"
 
+// Does not populate App.Domains
+func GetApps() ([]App, error) {
+	apps := []App{}
+
+	err := Connection().Select(&apps, "SELECT * FROM App")
+
+	return apps, err
+}
+
 // Populates App.Domains
 func GetAppById(id string) (App, error) {
 	app := App{}
@@ -19,13 +28,9 @@ func GetAppById(id string) (App, error) {
 	return app, err
 }
 
-// Does not populate App.Domains
-func GetApps() ([]App, error) {
-	apps := []App{}
-
-	err := Connection().Select(&apps, "SELECT * FROM App")
-
-	return apps, err
+func PopulateAppDomains(app App) (App, error) {
+	err := Connection().Get(&app.Domains, "SELECT * FROM Domain WHERE app=$1", app.Id)
+	return app, err
 }
 
 func GetAppManagers(app string) ([]User, error) {
