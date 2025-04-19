@@ -54,6 +54,9 @@ func CreateUser(name string, email string, password string) (string, error) {
 	connection := Connection()
 
 	id, err := GenerateUniqueUserId(10)
+	if err != nil {
+		return id, err
+	}
 
 	hashedPassword, err := hash.Hash([]byte(password), nil)
 	if err != nil {
