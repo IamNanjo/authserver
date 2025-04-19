@@ -2,11 +2,13 @@ package routes
 
 import (
 	"context"
-	"github.com/IamNanjo/authserver/db"
-	"github.com/IamNanjo/authserver/pages"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/IamNanjo/authserver/backend/utils"
+	"github.com/IamNanjo/authserver/db"
+	"github.com/IamNanjo/authserver/pages"
 )
 
 func ValidateRedirectURL(domains []db.Domain, url url.URL) bool {
@@ -29,7 +31,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 	if appId == "" {
 		err := pages.Index().Render(context.Background(), w)
 		if err != nil {
-			http.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
+			utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
 			return
 		}
 		return
@@ -37,32 +39,32 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 
 	redirectTo := query.Get("redirect")
 	if redirectTo == "" {
-		http.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified", http.StatusMovedPermanently)
 		return
 	}
 
 	redirectURL, err := url.Parse(redirectTo)
 	if err != nil {
-		http.Redirect(w, r, "/error?status=400&error=Invalid redirect URL", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid redirect URL", http.StatusMovedPermanently)
 		return
 	}
 
 	app, err := db.GetAppById(appId)
 	if err != nil {
-		http.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found", http.StatusMovedPermanently)
 		return
 	}
 
 	redirectURLIsAllowed := ValidateRedirectURL(app.Domains, *redirectURL)
 
 	if !redirectURLIsAllowed {
-		http.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
 		return
 	}
 
 	err = pages.Auth(app, redirectTo).Render(context.Background(), w)
 	if err != nil {
-		http.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
 		return
 	}
 }
@@ -80,6 +82,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	default:
-		http.Redirect(w, r, "/error?status=405&error="+"Invalid method "+r.Method+" for route "+r.URL.Path, http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=405&error="+"Invalid method "+r.Method+" for route "+r.URL.Path, http.StatusMovedPermanently)
 	}
 }

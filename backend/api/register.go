@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/IamNanjo/authserver/backend/utils"
 	"github.com/IamNanjo/authserver/components"
 	"github.com/IamNanjo/authserver/db"
 )
@@ -14,9 +15,9 @@ func PasswordRegister(w http.ResponseWriter, r *http.Request) {
 
 	expectsJsonResponse := strings.HasPrefix(r.Header.Get("Accept"), "application/json")
 
-	username := r.Form.Get("username")
-	email := r.Form.Get("email")
-	password := r.Form.Get("password")
+	email := r.PostForm.Get("email")
+	username := r.PostForm.Get("username")
+	password := r.PostForm.Get("password")
 
 	if username == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -29,16 +30,11 @@ func PasswordRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if email == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	_, err := db.CreateUser(username, email, password)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	utils.Redirect(w, r, "/", http.StatusMovedPermanently)
 }

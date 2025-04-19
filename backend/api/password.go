@@ -7,6 +7,7 @@ import (
 	"github.com/IamNanjo/authserver/components"
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/hash"
+	"github.com/IamNanjo/authserver/backend/utils"
 )
 
 // Ensures cookie is valid. Also ensures session exists in DB.
@@ -83,7 +84,7 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 
 	if r.Header.Get("HX-Request") == "" {
-		http.Redirect(w, r, "/", 301)
+		utils.Redirect(w, r, "/", 301)
 	} else {
 		w.Header().Set("HX-Location", "/")
 	}
