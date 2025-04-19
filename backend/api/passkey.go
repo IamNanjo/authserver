@@ -11,7 +11,7 @@ import (
 var WebAuthnConfig *webauthn.Config
 var WebAuthn *webauthn.WebAuthn
 
-func PasskeyBeginRegister(w http.ResponseWriter, r *http.Request) {
+func PasskeyRegisterBegin(w http.ResponseWriter, r *http.Request) {
 	body := EmailAndUsernameRequestBody{}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
@@ -50,11 +50,11 @@ func PasskeyBeginRegister(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func PasskeyFinishRegister(w http.ResponseWriter, r *http.Request) {
+func PasskeyRegisterFinish(w http.ResponseWriter, r *http.Request) {
 }
 
-func PasskeyBeginLogin(w http.ResponseWriter, r *http.Request) {
+func PasskeyLoginBegin(w http.ResponseWriter, r *http.Request) {
 }
 
-func PasskeyFinishLogin(w http.ResponseWriter, r *http.Request) {
+func PasskeyLoginFinish(w http.ResponseWriter, r *http.Request) {
 }
