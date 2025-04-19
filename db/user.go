@@ -1,7 +1,6 @@
 package db
 
 import (
-	"errors"
 	"github.com/IamNanjo/authserver/hash"
 )
 
@@ -54,27 +53,7 @@ func GetAppUsers(id string) ([]UserWithAppRole, error) {
 func CreateUser(name string, email string, password string) (string, error) {
 	connection := Connection()
 
-	var remainingAttempts = 5
-	var id = ""
-	var err error
-
-	for {
-		if remainingAttempts == 0 {
-			return id, errors.New("Could not create unique ID")
-		}
-
-		id, err = GenerateId(10)
-		if err != nil {
-			return id, err
-		}
-
-		err = connection.Get(nil, "SELECT 1 FROM User WHERE id = $1", id)
-		if err != nil {
-			break
-		}
-
-		remainingAttempts--
-	}
+	id, err := GenerateUniqueUserId(10)
 
 	hashedPassword, err := hash.Hash([]byte(password), nil)
 	if err != nil {
@@ -88,7 +67,7 @@ func CreateUser(name string, email string, password string) (string, error) {
 
 	_, err = tx.Exec("INSERT INTO User (id, name, email, password) VALUES ($1, $2, $3, $4)", id, name, email, hashedPassword)
 	if err != nil {
-
+		return id, err
 	}
 
 	err = tx.Commit()
