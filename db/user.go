@@ -67,6 +67,7 @@ func CreateUser(name string, email string, password string) (string, error) {
 
 	_, err = tx.Exec("INSERT INTO User (id, name, email, password) VALUES ($1, $2, $3, $4)", id, name, email, hashedPassword)
 	if err != nil {
+		tx.Rollback()
 		return id, err
 	}
 
