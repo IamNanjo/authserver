@@ -13,7 +13,7 @@ var pageStyles = []string{"auth.css", "input.css"}
 var pageScript = "register.js"
 var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 	}}
-	@Layout(pageTitle, pageStyles, pageScript) {
+	@HtmlTemplate(pageTitle, pageStyles, pageScript) {
 		<main>
 			<h1 class="title">Authenticate to { app.Name }</h1>
 			<form

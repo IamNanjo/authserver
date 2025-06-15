@@ -8,7 +8,7 @@ var pageTitle = "Error"
 var pageStyles = []string{"error.css"}
 var pageScript = "error.js"
 	}}
-	@Layout(pageTitle, pageStyles, pageScript) {
+	@HtmlTemplate(pageTitle, pageStyles, pageScript) {
 		<main>
 			<button id="back">&larr; Back</button>
 			@components.Error(err, nil)
