@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"context"
 	"net/http"
 	"net/url"
 	"strings"
@@ -29,7 +28,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 
 	appId := query.Get("app")
 	if appId == "" {
-		err := pages.Index().Render(context.Background(), w)
+		err := pages.Index().Render(r.Context(), w)
 		if err != nil {
 			utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
 			return
@@ -62,7 +61,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = pages.Auth(app, redirectTo).Render(context.Background(), w)
+	err = pages.Auth(app, redirectTo).Render(r.Context(), w)
 	if err != nil {
 		utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
 		return
