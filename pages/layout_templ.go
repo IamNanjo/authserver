@@ -29,7 +29,7 @@ func Layout(pageTitle string, pageStyles []string, pageScript string) templ.Comp
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0 interactive-widget=resizes-content\"><meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\"><meta name=\"description\" content=\"Flexible cross site authentication platform\"><meta name=\"author\" content=\"IamNanjo\"><meta name=\"keywords\" content=\"auth,authentication\"><meta name=\"htmx-config\" content='{\"responseHandling\": [{\"code\":\".*\", \"swap\": true}]}'><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"><link rel=\"manifest\" href=\"/static/manifest.json\"><link rel=\"stylesheet\" href=\"/static/css/global.css\"><link rel=\"stylesheet\" href=\"/static/css/components.css\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0 interactive-widget=resizes-content\"><meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\"><meta name=\"description\" content=\"Flexible cross site authentication platform\"><meta name=\"author\" content=\"IamNanjo\"><meta name=\"keywords\" content=\"auth,authentication\"><meta name=\"htmx-config\" content='{\"responseHandling\": [{\"code\":\".*\", \"swap\": true}]}'><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"><link rel=\"manifest\" href=\"/static/manifest.json\"><link rel=\"stylesheet\" href=\"/static/css/global.css\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,7 +41,7 @@ func Layout(pageTitle string, pageStyles []string, pageScript string) templ.Comp
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs("/static/css/" + pageStyle)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 19, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 18, Col: 60}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -64,7 +64,7 @@ func Layout(pageTitle string, pageStyles []string, pageScript string) templ.Comp
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("/static/js/" + pageScript)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 25, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 24, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -83,7 +83,7 @@ func Layout(pageTitle string, pageStyles []string, pageScript string) templ.Comp
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(pageTitle)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 29, Col: 16}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pages/layout.templ`, Line: 28, Col: 16}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
