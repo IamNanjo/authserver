@@ -22,29 +22,6 @@ main > * {
     width: 100%;
 }
 
-.password-auth__form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    width: 100%;
-}
-
-.password-auth__form-label {
-    color: var(--subtext0);
-    user-select: none;
-}
-
-.password-auth__form-field {
-    width: 100%;
-    background-color: var(--mantle);
-    color: white;
-    padding: 0.25em 0.5em;
-    font-size: 1.25rem;
-    outline: 2px solid var(--subtext0);
-    border: none;
-    border-radius: 6px;
-}
-
 .password-auth__form-register {
     align-self: flex-end;
 }

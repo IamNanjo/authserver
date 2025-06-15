@@ -1,0 +1,10 @@
+package components
+
+// Name is also used as the input ID.
+templ Input(name string, label string, attributes templ.Attributes) {
+	{{ var id = "input-" + name }}
+	<div class="input-group">
+		<input { attributes... } id={ id } class="input-field" name={ name } placeholder=" "/>
+		<label class="input-label" for={ id }>{ label }</label>
+	</div>
+}

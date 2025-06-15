@@ -3,10 +3,10 @@ package pages
 templ Index() {
 	{{
 var pageTitle = "Authentication service"
-var pageStyle = "index.css"
+var pageStyles = []string{"index.css"}
 var pageScript = ""
 	}}
-	@Layout(pageTitle, pageStyle, pageScript) {
+	@Layout(pageTitle, pageStyles, pageScript) {
 		<main class="center">Authentication service</main>
 	}
 }
