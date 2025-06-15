@@ -134,6 +134,14 @@ main {
     margin-inline: auto;
 }
 
+button,
+button *,
+img,
+select,
+select * {
+    user-select: none;
+}
+
 a {
     color: var(--blue);
     text-decoration: none;
