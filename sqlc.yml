@@ -1,0 +1,18 @@
+version: "2"
+
+sql:
+  - schema: "db/schema.sql"
+    queries: "db/queries.sql"
+    engine: "sqlite"
+    gen:
+      go:
+        out: "db"
+        sql_package: "database/sql"
+        emit_db_tags: true
+        emit_exact_table_names: true
+        emit_empty_slices: false
+        emit_json_tags: true
+        emit_pointers_for_null_types: true
+        initialisms: []
+        json_tags_id_uppercase: false
+        json_tags_case_style: camel

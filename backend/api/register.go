@@ -25,7 +25,7 @@ func PasswordRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := db.CreateUser(username, email, password)
+	_, err := db.Q().CreateUser(r.Context(), db.CreateUserParams{Name: username, Email: &email, Password: &password})
 	if err != nil {
 		errMsg := err.Error()
 		after, conflict := strings.CutPrefix(errMsg, "constraint failed: UNIQUE constraint failed: User.")
@@ -50,5 +50,5 @@ func PasswordRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.Redirect(w, r, "/", http.StatusMovedPermanently)
+	utils.Redirect(w, r, "/")
 }

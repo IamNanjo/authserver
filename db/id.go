@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/base64"
 	"errors"
@@ -56,11 +57,11 @@ func generateUniqueId(length int, isUnique func(id string) bool) (string, error)
 }
 
 func userIdIsUnique(id string) bool {
-	err := Connection().Get(nil, "SELECT 1 FROM User WHERE id = $1", id)
-	return err != nil
+	_, err := Q().GetUserById(context.Background(), id)
+	return err == nil
 }
 
 func sessionIdIsUnique(id string) bool {
-	err := Connection().Get(nil, "SELECT 1 FROM Session WHERE id = $1", id)
-	return err != nil
+	_, err := Q().GetSessionById(context.Background(), id)
+	return err == nil
 }

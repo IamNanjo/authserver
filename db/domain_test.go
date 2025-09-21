@@ -1,17 +1,18 @@
 package db
 
 import (
+	"context"
 	"slices"
 	"testing"
 )
 
 func TestGetAppDomains(t *testing.T) {
-	err := CreateDomain(testAppId, "local.test")
+	_, err := Q().CreateDomain(context.Background(), CreateDomainParams{App: testAppId, Name: "local.test"})
 	if err != nil {
 		t.Fatalf("Domain creation failed. %v", err)
 	}
 
-	domains, err := GetAppDomains(testAppId)
+	domains, err := Q().GetAppDomains(context.Background(), testAppId)
 	if err != nil {
 		t.Fatalf("Could not get app domains. %v", err)
 	}

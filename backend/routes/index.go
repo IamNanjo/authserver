@@ -30,7 +30,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 	if appId == "" {
 		err := pages.Index().Render(r.Context(), w)
 		if err != nil {
-			utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
+			utils.Redirect(w, r, "/error?status=500&error=Could not render the page")
 			return
 		}
 		return
@@ -38,32 +38,34 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 
 	redirectTo := query.Get("redirect")
 	if redirectTo == "" {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified")
 		return
 	}
 
 	redirectURL, err := url.Parse(redirectTo)
 	if err != nil {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid redirect URL", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid redirect URL")
 		return
 	}
 
-	app, err := db.GetAppById(appId)
+	app, err := db.Q().GetApp(r.Context(), appId)
 	if err != nil {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found")
 		return
 	}
 
-	redirectURLIsAllowed := ValidateRedirectURL(app.Domains, *redirectURL)
+	domains, err := db.Q().GetAppDomains(r.Context(), appId)
+
+	redirectURLIsAllowed := ValidateRedirectURL(domains, *redirectURL)
 
 	if !redirectURLIsAllowed {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains")
 		return
 	}
 
 	err = pages.Auth(app, redirectTo).Render(r.Context(), w)
 	if err != nil {
-		utils.Redirect(w, r, "/error?status=500&error=Could not render the page", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=500&error=Could not render the page")
 		return
 	}
 }
@@ -81,6 +83,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	default:
-		utils.Redirect(w, r, "/error?status=405&error="+"Invalid method "+r.Method+" for route "+r.URL.Path, http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=405&error="+"Invalid method "+r.Method+" for route "+r.URL.Path)
 	}
 }

@@ -23,9 +23,9 @@ var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 				hx-headers='{"Accept": "application/json"}'
 			>
 				@components.Input("email", "Email (optional)", templ.Attributes{"type": "email", "autocomplete": "email"})
-				@components.Input("username", "Username (required)", templ.Attributes{"required": true, "type": "username",
+				@components.Input("username", "Username", templ.Attributes{"required": true, "type": "username",
 					"autocomplete": "username"})
-				@components.Input("password", "Password (required)", templ.Attributes{"required": true, "type": "password",
+				@components.Input("password", "Password", templ.Attributes{"required": true, "type": "password",
 					"autocomplete": "password"})
 				<button class="button" type="submit"><span>Create account</span></button>
 				<a class="password-auth__form-register" href={ templ.URL("/" + queryParams) }>Already have an account?</a>

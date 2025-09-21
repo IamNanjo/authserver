@@ -5,19 +5,20 @@ const containerStyle = {
     right: "0.5em",
     display: "flex",
     flexDirection: "column",
+    alignItems: "flex-end",
     gap: "0.5em",
-    width: "min(80%, 14em)",
+    width: "min(80%, 16em)",
     height: "min(80%, 25em)",
-    zIndex: "1",
-    overflow: "auto",
+    zIndex: "100",
+    overflow: "hidden",
     scrollbarWidth: "none",
 };
 
 /** @type Partial<CSSStyleDeclaration> */
 const notificationBaseStyle = {
-    position: "relative",
     color: "var(--crust)",
     width: "100%",
+    maxWidth: "max-content",
     padding: "0.5em",
     borderRadius: "4px",
     fontWeight: "500",

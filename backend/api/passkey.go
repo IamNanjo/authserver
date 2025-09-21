@@ -29,7 +29,7 @@ func PasskeyRegisterBegin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := db.GetUserByEmailOrUsername(emailOrUsername)
+	user, err := db.Q().GetUserByEmailOrUsername(r.Context(), &emailOrUsername)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return

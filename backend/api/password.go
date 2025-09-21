@@ -49,13 +49,17 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := db.GetUserByEmailOrUsername(emailOrUsername)
+	user, err := db.Q().GetUserByEmailOrUsername(r.Context(), &emailOrUsername)
 	if err != nil {
 		utils.Error(w, r, http.StatusNotFound, "User not found")
 		return
 	}
 
-	passwordIsCorrect, err := hash.HashValidate([]byte(password), user.Password)
+	if user.Password == nil {
+		utils.Error(w, r, http.StatusBadRequest, "Invalid login method for user "+user.Name)
+	}
+
+	passwordIsCorrect, err := hash.HashValidate([]byte(password), *user.Password)
 	if err != nil || !passwordIsCorrect {
 		utils.Error(w, r, http.StatusUnauthorized, "Incorrect password")
 		return
@@ -82,5 +86,5 @@ func PasswordAuth(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &cookie)
 
-	utils.Redirect(w, r, "/", 301)
+	utils.Redirect(w, r, "/")
 }

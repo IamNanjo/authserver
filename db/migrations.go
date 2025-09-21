@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-//go:embed migrations/**
+//go:embed migrations/*.sql
 var migrationFs embed.FS
 
 type MigrationFile struct {
@@ -17,7 +17,7 @@ type MigrationFile struct {
 	content  []byte
 }
 
-func GetMigrations(latest int) ([]MigrationFile, error) {
+func GetMigrations(latest int64) ([]MigrationFile, error) {
 	migrationFiles, err := migrationFs.ReadDir("migrations")
 	if err != nil {
 		return nil, err
@@ -29,11 +29,7 @@ func GetMigrations(latest int) ([]MigrationFile, error) {
 		filename := f.Name()
 
 		id, err := strconv.Atoi(strings.TrimSuffix(filename, ".sql"))
-		if err != nil {
-			continue
-		}
-
-		if f.Type().IsDir() || !strings.HasSuffix(filename, ".sql") || id <= latest {
+		if err != nil || int64(id) <= latest {
 			continue
 		}
 

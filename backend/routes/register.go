@@ -15,29 +15,31 @@ func RegisterPage(w http.ResponseWriter, r *http.Request) {
 	redirect := query.Get("redirect")
 
 	if appId == "" {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No app ID specified", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No app ID specified")
 		return
 	}
 
 	if redirect == "" {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. No redirect page specified")
 		return
 	}
 
 	redirectUrl, err := url.Parse(redirect)
 	if err != nil {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid redirect URL", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid redirect URL")
 		return
 	}
 
-	app, err := db.GetAppById(appId)
+	app, err := db.Q().GetApp(r.Context(), appId)
 	if err != nil {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found", http.StatusMovedPermanently)
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found")
 		return
 	}
 
-	if !ValidateRedirectURL(app.Domains, *redirectUrl) {
-		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains", http.StatusMovedPermanently)
+	domains, err := db.Q().GetAppDomains(r.Context(), appId)
+
+	if !ValidateRedirectURL(domains, *redirectUrl) {
+		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains")
 		return
 	}
 

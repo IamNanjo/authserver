@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"slices"
 	"testing"
 )
@@ -9,17 +10,18 @@ var testAppId string
 
 func TestCreateApp(t *testing.T) {
 	var err error
-	testAppId, err = CreateApp("TestApp", "")
+	testApp, err := Q().CreateApp(context.Background(), CreateAppParams{Name: "TestApp"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	testAppId = testApp.Id
+
+	_, err = Q().GetApp(context.Background(), testAppId)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	_, err = GetAppById(testAppId)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	apps, err := GetApps()
+	apps, err := Q().GetApps(context.Background())
 	if err != nil {
 		t.Fatal(err)
 	}

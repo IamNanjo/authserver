@@ -16,11 +16,11 @@ func TestSetup(t *testing.T) {
 		t.Errorf("Database initialization failed. %v", err)
 	}
 
-	// Truncate tables
-	Connection().Exec(
-		`DELETE FROM App;
+	// Truncate tables and reset ID counters
+	Q().db.Exec(`
+		DELETE FROM App;
 		DELETE FROM Domain;
 		DELETE FROM User;
-		DELETE FROM AppUser;`,
-	)
+		DELETE FROM AppUser;
+	`)
 }

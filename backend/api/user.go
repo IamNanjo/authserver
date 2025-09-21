@@ -13,7 +13,7 @@ func UserExists(w http.ResponseWriter, r *http.Request) {
 	username := query.Get("username")
 
 	if email != "" {
-		_, err := db.GetUserByEmail(email)
+		_, err := db.Q().GetUserByEmail(r.Context(), &email)
 		if err == nil {
 			utils.Error(w, r, http.StatusConflict, "A user with this email already exists")
 			return
@@ -21,7 +21,7 @@ func UserExists(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if username != "" {
-		_, err := db.GetUserByUsername(username)
+		_, err := db.Q().GetUserByUsername(r.Context(), username)
 		if err == nil {
 			utils.Error(w, r, http.StatusConflict, "A user with this username already exists")
 			return
