@@ -9,10 +9,11 @@ import (
 
 	"github.com/IamNanjo/authserver/backend/api"
 	"github.com/IamNanjo/authserver/backend/routes"
+	"github.com/IamNanjo/authserver/config"
 	"github.com/go-webauthn/webauthn/webauthn"
 )
 
-func StartServer(addr string, staticFiles fs.FS) {
+func StartServer(config *config.Config, staticFiles fs.FS) {
 	webAuthnEnabled := false
 	webAuthnId := os.Getenv("AUTHSERVER_WEBAUTHN_RPID")
 	webAuthnOrigins := strings.Split(os.Getenv("AUTHSERVER_WEBAUTHN_RPORIGINS"), ",")
@@ -59,5 +60,5 @@ func StartServer(addr string, staticFiles fs.FS) {
 	http.HandleFunc("GET /error/{$}", routes.Error)
 	http.HandleFunc("GET /{$}", routes.Index)
 
-	http.ListenAndServe(addr, nil)
+	http.ListenAndServe(config.Address, nil)
 }

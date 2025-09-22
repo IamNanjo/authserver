@@ -2,10 +2,11 @@ package main
 
 import (
 	"embed"
-	"flag"
-	"github.com/IamNanjo/authserver/backend"
-	"github.com/IamNanjo/authserver/db"
 	"os"
+
+	"github.com/IamNanjo/authserver/backend"
+	"github.com/IamNanjo/authserver/config"
+	"github.com/IamNanjo/authserver/db"
 )
 
 //go:embed static/**
@@ -13,21 +14,11 @@ var staticFiles embed.FS
 
 func main() {
 	var err error
-	addr := os.Getenv("AUTHSERVER_ADDRESS")
-	if addr == "" {
-		addr = ":8080"
-	}
 
-	dbPath := os.Getenv("AUTHSERVER_DB")
+	appConfig := (&config.Config{}).ParseConfig()
 
-	// Override environment variables with cli flag
-	flag.StringVar(&addr, "addr", addr, "Listen address")
-	flag.StringVar(&dbPath, "db", dbPath, "Database path")
-
-	flag.Parse()
-
-	if dbPath != "" {
-		err = db.Initialize(&dbPath)
+	if appConfig.DatabaseURI != "" {
+		err = db.Initialize(&appConfig.DatabaseURI)
 	} else {
 		err = db.Initialize(nil)
 	}
@@ -37,6 +28,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	os.Stdout.WriteString("Starting server on " + addr + "\n")
-	backend.StartServer(addr, staticFiles)
+	os.Stdout.WriteString("Starting server on " + appConfig.Address + "\n")
+	backend.StartServer(appConfig, staticFiles)
 }
