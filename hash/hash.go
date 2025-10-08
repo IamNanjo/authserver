@@ -1,8 +1,8 @@
 package hash
 
 import (
-	"bytes"
 	"crypto/rand"
+	"crypto/subtle"
 	"encoding/base64"
 	"fmt"
 	"golang.org/x/crypto/argon2"
@@ -70,11 +70,11 @@ func Hash(password []byte, salt []byte) (string, error) {
 		salt = saltGenerated
 	}
 
-	if password == nil || len(password) == 0 {
+	if len(password) == 0 {
 		return "", fmt.Errorf("Password cannot be empty")
 	}
 
-	if salt == nil || len(salt) == 0 {
+	if len(salt) == 0 {
 		return "", fmt.Errorf("Salt cannot be empty")
 	}
 
@@ -114,7 +114,7 @@ func HashValidate(password []byte, hash string) (bool, error) {
 		return false, err
 	}
 
-	if !bytes.Equal(hashedPasswordKey, hashKey) {
+	if subtle.ConstantTimeCompare(hashedPasswordKey, hashKey) == 0 {
 		return false, nil
 	}
 
