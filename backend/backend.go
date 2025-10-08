@@ -60,5 +60,5 @@ func StartServer(config *config.Config, staticFiles fs.FS) {
 	http.HandleFunc("GET /error/{$}", routes.Error)
 	http.HandleFunc("GET /{$}", routes.Index)
 
-	http.ListenAndServe(config.Address, nil)
+	http.ListenAndServe(*config.Address, nil)
 }

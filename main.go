@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"os"
 
 	"github.com/IamNanjo/authserver/backend"
@@ -15,19 +16,19 @@ var staticFiles embed.FS
 func main() {
 	var err error
 
-	appConfig := (&config.Config{}).ParseConfig()
+	appConfig := config.Parse()
 
-	if appConfig.DatabaseURI != "" {
-		err = db.Initialize(&appConfig.DatabaseURI)
+	if appConfig.DatabaseURI == nil || *appConfig.DatabaseURI == "" {
+		err = db.Initialize(appConfig.DatabaseURI)
 	} else {
 		err = db.Initialize(nil)
 	}
 
 	if err != nil {
-		os.Stderr.WriteString("Could not initialize database. Error: " + err.Error() + "\n")
+		fmt.Fprintf(os.Stderr, "Could not initialize database. Error: %+v\n", err)
 		os.Exit(1)
 	}
 
-	os.Stdout.WriteString("Starting server on " + appConfig.Address + "\n")
+	fmt.Printf("Starting server on %s\n", *appConfig.Address)
 	backend.StartServer(appConfig, staticFiles)
 }
