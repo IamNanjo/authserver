@@ -37,6 +37,10 @@ func RegisterPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	domains, err := db.Q().GetAppDomains(r.Context(), appId)
+	if err != nil {
+		utils.Redirect(w, r, "/error?status=400&error=App domains not configured")
+		return
+	}
 
 	if !ValidateRedirectURL(domains, *redirectUrl) {
 		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. Redirect page is not on the app domains")

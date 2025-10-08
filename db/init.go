@@ -46,7 +46,12 @@ func Initialize(path *string) error {
 			os.Exit(1)
 		}
 
-		err = tx.Tx.Commit()
+	}
+
+	err = tx.Tx.Commit()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to commit migrations: %+v\n", err)
+		os.Exit(1)
 	}
 
 	migrationsFinished := len(migrations)
