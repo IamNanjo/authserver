@@ -2,6 +2,7 @@ package db
 
 import (
 	"embed"
+	"fmt"
 	"os"
 	"sort"
 	"strconv"
@@ -35,7 +36,7 @@ func GetMigrations(latest int64) ([]MigrationFile, error) {
 
 		content, err := migrationFs.ReadFile("migrations/" + filename)
 		if err != nil {
-			os.Stderr.WriteString("Could not read migration file: " + filename + "\n")
+			fmt.Fprintf(os.Stderr, "Could not read migration file: %s\n", filename)
 			os.Exit(1)
 		}
 

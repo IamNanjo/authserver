@@ -3,9 +3,9 @@ package db
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 
 	_ "modernc.org/sqlite"
 )
@@ -35,14 +35,14 @@ func Initialize(path *string) error {
 	migrations, err := GetMigrations(latestMigration)
 
 	if err != nil {
-		os.Stderr.WriteString("Could not get migrations. Error: " + err.Error() + "\n")
+		fmt.Fprintf(os.Stderr, "Could not get migrations. Error: %+v\n", err)
 		os.Exit(1)
 	}
 
 	for _, migration := range migrations {
 		_, err = tx.Tx.Exec(string(migration.content))
 		if err != nil {
-			os.Stderr.WriteString("Migration failed: " + migration.filename + "\n" + err.Error() + "\n")
+			fmt.Fprintf(os.Stderr, "Migration failed: %s\n%+v\n", migration.filename, err)
 			os.Exit(1)
 		}
 
@@ -50,12 +50,7 @@ func Initialize(path *string) error {
 	}
 
 	migrationsFinished := len(migrations)
-	os.Stdout.WriteString("Finished " + strconv.Itoa(migrationsFinished) + " database migration")
-	if migrationsFinished == 1 {
-		os.Stdout.WriteString("\n")
-	} else {
-		os.Stdout.WriteString("s\n")
-	}
+	fmt.Printf("Finished %d database migration(s)\n", migrationsFinished)
 
 	return nil
 }
@@ -95,7 +90,7 @@ func Q() *DBQueries {
 
 	connection, err := sql.Open("sqlite", dbPath)
 	if err != nil {
-		os.Stderr.WriteString("Could not connect to database " + dbPath + "\n")
+		fmt.Fprintf(os.Stderr, "Could not connect to database %s\n", dbPath)
 		os.Exit(1)
 	}
 
@@ -117,7 +112,7 @@ func Tx() *DBTransactions {
 		connection, err = sql.Open("sqlite", dbPath)
 	}
 	if err != nil {
-		os.Stderr.WriteString("Could not connect to database " + dbPath + "\n")
+		fmt.Fprintf(os.Stderr, "Could not connect to database %s\n", dbPath)
 		os.Exit(1)
 	}
 
@@ -130,7 +125,7 @@ func Tx() *DBTransactions {
 
 	tx, err := connection.Begin()
 	if err != nil {
-		os.Stderr.WriteString("Could not start transaction")
+		fmt.Fprintf(os.Stderr, "Could not start transaction: %+v\n", err)
 		os.Exit(1)
 	}
 
