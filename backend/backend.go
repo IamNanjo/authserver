@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/IamNanjo/authserver/backend/api"
-	"github.com/IamNanjo/authserver/backend/middleware"
 	"github.com/IamNanjo/authserver/backend/routes"
 	"github.com/IamNanjo/authserver/config"
 
