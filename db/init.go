@@ -51,7 +51,7 @@ func Initialize(path string) error {
 
 	migrationsFinished := len(migrations)
 	if migrationsFinished != 0 {
-		return format.Err("Finished %d database migration(s)\n", migrationsFinished)
+		logging.Ok("Finished %d database migration(s)\n", migrationsFinished)
 	}
 
 	return nil
