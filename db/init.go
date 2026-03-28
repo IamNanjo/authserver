@@ -3,14 +3,13 @@ package db
 import (
 	"context"
 	"database/sql"
-	"fmt"
-	"os"
-	"path/filepath"
 
+	"github.com/IamNanjo/go-logging"
+	"github.com/IamNanjo/go-logging/pkg/format"
 	_ "modernc.org/sqlite"
 )
 
-var dbPath string = ""
+var dbPath string
 var connection *sql.DB
 var dbQ *DBQueries
 var dbTx *DBTransactions
@@ -18,14 +17,15 @@ var dbTx *DBTransactions
 // Create tables according to migrations.
 // Migrations are run in ascending order based on filename.
 // Path can be nil to use default path.
-func Initialize(path *string) error {
-	if path == nil {
-		getDefaultPath()
-	} else {
-		dbPath = *path
-	}
-
+func Initialize(path string) error {
+	dbPath = path
 	tx := Tx()
+
+	var err error
+	connection, err = sql.Open("sqlite", dbPath)
+	if err != nil {
+		return format.Err("Failed to open database connection %w", err)
+	}
 
 	latestMigration, err := tx.GetLatestMigration(context.Background())
 	if err != nil {
@@ -33,47 +33,28 @@ func Initialize(path *string) error {
 	}
 
 	migrations, err := GetMigrations(latestMigration)
-
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not get migrations. Error: %+v\n", err)
-		os.Exit(1)
+		return format.Err("Could not get migrations %w", err)
 	}
 
 	for _, migration := range migrations {
-		_, err = tx.Tx.Exec(string(migration.content))
+		_, err = tx.Tx.Exec(migration.content)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Migration failed: %s\n%+v\n", migration.filename, err)
-			os.Exit(1)
+			return format.Err("Migration %s failed %w", migration.filename, err)
 		}
-
 	}
 
 	err = tx.Tx.Commit()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to commit migrations: %+v\n", err)
-		os.Exit(1)
+		return format.Err("Failed to commit migrations %w", err)
 	}
 
 	migrationsFinished := len(migrations)
-	fmt.Printf("Finished %d database migration(s)\n", migrationsFinished)
+	if migrationsFinished != 0 {
+		return format.Err("Finished %d database migration(s)\n", migrationsFinished)
+	}
 
 	return nil
-}
-
-// Default path is <path of executable>/authserver.db.
-// Evaluates symlinks.
-func getDefaultPath() {
-	exe, err := os.Executable()
-	if err != nil {
-		panic(err)
-	}
-
-	path, err := filepath.EvalSymlinks(exe)
-	if err != nil {
-		panic(err)
-	}
-
-	dbPath = filepath.Dir(path) + string(os.PathSeparator) + "authserver.db"
 }
 
 type DBQueries struct {
@@ -95,8 +76,7 @@ func Q() *DBQueries {
 
 	connection, err := sql.Open("sqlite", dbPath)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not connect to database %s\n", dbPath)
-		os.Exit(1)
+		logging.Fatal("Could not connect to database %s\n", dbPath)
 	}
 
 	// Pragma options
@@ -117,8 +97,7 @@ func Tx() *DBTransactions {
 		connection, err = sql.Open("sqlite", dbPath)
 	}
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not connect to database %s\n", dbPath)
-		os.Exit(1)
+		logging.Fatal("Could not connect to database %s\n", dbPath)
 	}
 
 	// Pragma options
@@ -130,8 +109,7 @@ func Tx() *DBTransactions {
 
 	tx, err := connection.Begin()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not start transaction: %+v\n", err)
-		os.Exit(1)
+		logging.Fatal("Could not start transaction: %+v\n", err)
 	}
 
 	dbTx = &DBTransactions{Queries: *New(tx), Tx: tx}

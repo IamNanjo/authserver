@@ -3,13 +3,13 @@ SHELL := /usr/bin/env bash
 # Paths
 SCRIPT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 DIST_PATH := ${SCRIPT_PATH}/dist
-TEST_DB_PATH := ${DIST_PATH}/authserver_test.db
+TEST_DB_PATH := /tmp/authserver_test.db
 
 # Build options
 NAME := authserver
 PLATFORMS := linux/amd64 linux/arm64 windows/amd64 windows/arm64 darwin/amd64 darwin/arm64
 RELEASE_FLAGS := -ldflags "-s -w"
-DEV_FLAGS :=
+DEV_FLAGS := -v
 
 # Output colors
 NC := \033[0m
@@ -49,7 +49,7 @@ test:
 
 dev:
 	@echo -e "${YELLOW}Building development version of ${NAME}${NC}"
-	@go build -o "dist/${NAME}" -v ${DEV_FLAGS} && echo -e "${GREEN}Finished building development version of ${NAME}${NC}\n"
+	@CGO_ENABLED=0 go build -o "dist/${NAME}" ${DEV_FLAGS} && echo -e "${GREEN}Finished building development version of ${NAME}${NC}\n"
 	@echo -e "${YELLOW}Starting server${NC}"
 	@if command -v sqlite3 &> /dev/null; then \
 		appId=$$(sqlite3 -column dist/authserver_test.db "SELECT id FROM App;"); \
@@ -66,7 +66,7 @@ release:
 			output_name+=".exe"; \
 		fi; \
 		printf "Building $$output_name - "; \
-		go build -o $$output_name ${RELEASE_FLAGS}; \
+		CGO_ENABLED=0 go build -o $$output_name ${RELEASE_FLAGS}; \
 		if [ $$? -ne 0 ]; then \
 			echo -e "${RED}failed${NC}\n"; \
 			exit 1; \

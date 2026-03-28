@@ -1,19 +1,13 @@
 package db
 
 import (
-	"os"
-	"strings"
 	"testing"
 )
 
 func TestSetup(t *testing.T) {
-	dbPath, _ = os.Getwd()
-	dbPath = strings.TrimSuffix(dbPath, "db")
-	dbPath += "dist/authserver_test" + ".db"
-
-	err := Initialize(&dbPath)
+	err := Initialize("/tmp/authserver_test.db")
 	if err != nil {
-		t.Errorf("Database initialization failed. %v", err)
+		t.Fatalf("Database initialization failed %v", err)
 	}
 
 	// Truncate tables and reset ID counters

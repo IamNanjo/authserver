@@ -7,6 +7,8 @@ import (
 	"github.com/IamNanjo/authserver/backend/utils"
 	"github.com/IamNanjo/authserver/db"
 	"github.com/IamNanjo/authserver/pages"
+
+	"github.com/IamNanjo/go-logging"
 )
 
 func RegisterPage(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +35,7 @@ func RegisterPage(w http.ResponseWriter, r *http.Request) {
 	app, err := db.Q().GetApp(r.Context(), appId)
 	if err != nil {
 		utils.Redirect(w, r, "/error?status=400&error=Invalid authentication URL. App not found")
+		logging.Fatal("%+v\n", err)
 		return
 	}
 

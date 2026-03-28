@@ -1,42 +1,35 @@
 package backend
 
 import (
-	"fmt"
 	"io/fs"
 	"net/http"
-	"os"
-	"strings"
 
 	"github.com/IamNanjo/authserver/backend/api"
+	"github.com/IamNanjo/authserver/backend/middleware"
 	"github.com/IamNanjo/authserver/backend/routes"
 	"github.com/IamNanjo/authserver/config"
+
+	"github.com/IamNanjo/go-logging"
 	"github.com/go-webauthn/webauthn/webauthn"
 )
 
-func StartServer(config *config.Config, staticFiles fs.FS) {
+func StartServer(staticFiles fs.FS) {
 	webAuthnEnabled := false
-	webAuthnId := os.Getenv("AUTHSERVER_WEBAUTHN_RPID")
-	webAuthnOrigins := strings.Split(os.Getenv("AUTHSERVER_WEBAUTHN_RPORIGINS"), ",")
 
-	for i, origin := range webAuthnOrigins {
-		webAuthnOrigins[i] = strings.TrimSpace(origin)
-	}
-
-	if webAuthnId != "" && len(webAuthnOrigins) != 0 {
+	if config.Parsed.WebAuthn.Id != "" && len(config.Parsed.WebAuthn.Origins) != 0 {
 		webAuthnEnabled = true
 	}
 
 	if webAuthnEnabled {
 		api.WebAuthnConfig = &webauthn.Config{
-			RPDisplayName: "Authentication Service",
-			RPID:          webAuthnId,
-			RPOrigins:     webAuthnOrigins,
+			RPDisplayName: config.Parsed.WebAuthn.DisplayName,
+			RPID:          config.Parsed.WebAuthn.Id,
+			RPOrigins:     config.Parsed.WebAuthn.Origins,
 		}
 
 		webAuthn, err := webauthn.New(api.WebAuthnConfig)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not initialize Webauthn. %v", err)
-			os.Exit(1)
+			logging.Fatal("Could not initialize Webauthn. %v", err)
 		}
 
 		api.WebAuthn = webAuthn
@@ -60,5 +53,5 @@ func StartServer(config *config.Config, staticFiles fs.FS) {
 	http.HandleFunc("GET /error/{$}", routes.Error)
 	http.HandleFunc("GET /{$}", routes.Index)
 
-	http.ListenAndServe(*config.Address, nil)
+	http.ListenAndServe(config.Parsed.Address, nil)
 }

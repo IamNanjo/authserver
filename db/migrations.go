@@ -2,11 +2,11 @@ package db
 
 import (
 	"embed"
-	"fmt"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/IamNanjo/go-logging"
 )
 
 //go:embed migrations/*.sql
@@ -15,7 +15,7 @@ var migrationFs embed.FS
 type MigrationFile struct {
 	id       int
 	filename string
-	content  []byte
+	content  string
 }
 
 func GetMigrations(latest int64) ([]MigrationFile, error) {
@@ -36,11 +36,10 @@ func GetMigrations(latest int64) ([]MigrationFile, error) {
 
 		content, err := migrationFs.ReadFile("migrations/" + filename)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not read migration file: %s\n", filename)
-			os.Exit(1)
+			logging.Fatal("Could not read migration file: %s\n", filename)
 		}
 
-		migrations = append(migrations, MigrationFile{id: id, filename: filename, content: content})
+		migrations = append(migrations, MigrationFile{id: id, filename: filename, content: string(content)})
 	}
 
 	sort.Slice(migrations, func(i, j int) bool {
