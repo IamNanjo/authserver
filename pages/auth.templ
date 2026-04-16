@@ -1,17 +1,17 @@
 package pages
 
 import (
-	"github.com/IamNanjo/authserver/components"
-	"github.com/IamNanjo/authserver/db"
-	"github.com/IamNanjo/authserver/icons"
+	"github.com/IamNanjo/authserver/internal/components"
+	"github.com/IamNanjo/authserver/internal/db"
+	"github.com/IamNanjo/authserver/internal/icons"
 )
 
 templ Auth(app db.App, redirect string) {
 	{{
-var pageTitle = "Authenticate to " + app.Name
-var pageStyles = []string{"auth.css", "input.css"}
-var pageScript = "auth.js"
-var queryParams = "?app=" + app.Id + "&redirect=" + redirect
+		var pageTitle = "Authenticate to " + app.Name
+		var pageStyles = []string{"auth.css", "input.css"}
+		var pageScript = "auth.js"
+		var queryParams = "?app=" + app.Id + "&redirect=" + redirect
 	}}
 	@HtmlTemplate(pageTitle, pageStyles, pageScript) {
 		<main>

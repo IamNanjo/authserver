@@ -1,12 +1,12 @@
 package pages
 
-import "github.com/IamNanjo/authserver/components"
+import "github.com/IamNanjo/authserver/internal/components"
 
 templ Error(err string) {
 	{{
-var pageTitle = "Error"
-var pageStyles = []string{"error.css"}
-var pageScript = "error.js"
+		var pageTitle = "Error"
+		var pageStyles = []string{"error.css"}
+		var pageScript = "error.js"
 	}}
 	@HtmlTemplate(pageTitle, pageStyles, pageScript) {
 		<main>
